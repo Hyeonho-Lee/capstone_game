@@ -44,3 +44,4 @@ public class Player : MonoBehaviour
         //anim.SetBool("isRun", moveVec != Vector3.zero);
     }
 }
+hi
