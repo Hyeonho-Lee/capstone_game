@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraMove : MonoBehaviour { // 20163420 내용 추가
+public class CameraMove : MonoBehaviour { // 20163420 내용 추가!!
     [SerializeField]
     Vector3 offset;
     public GameObject player; // 플레이어 위치를 알기 위해 사용
