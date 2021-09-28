@@ -8,10 +8,21 @@ public class CameraMovement : MonoBehaviour
     public Vector3 offset;
     private GameObject player;
 
+    public float distance;
+    public Vector3 dir;
+
+    private Renderer object_renderer;
+    private Material object_mat;
+
     void Start()
     {
         Reset_Status();
         Find_GameObject("Player");
+    }
+
+    void Update()
+    {
+        Find_Wall();
     }
 
     void FixedUpdate()
@@ -41,5 +52,28 @@ public class CameraMovement : MonoBehaviour
     {
         transform.position = new Vector3(player.transform.position.x + offset.x, player.transform.position.y + offset.y, player.transform.position.z + offset.z);
         transform.rotation = Quaternion.Euler(camera_angle, 0.0f, 0.0f);
+    }
+
+    void Find_Wall()
+    {
+        distance = Vector3.Distance(transform.position, player.transform.position);
+        dir = (player.transform.position - transform.position).normalized;
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, dir, out hit, distance)) 
+        {
+            if(hit.transform.tag == "Wall") 
+            {
+                object_renderer = hit.collider.gameObject.GetComponentInChildren<Renderer>();
+                object_mat = object_renderer.material;
+
+                Color mat_color = object_mat.color;
+                mat_color.a = 0.3f;
+
+                object_mat.color = mat_color;
+            }
+        }
+
+        Debug.DrawLine(transform.position, player.transform.position, Color.red);
     }
 }
