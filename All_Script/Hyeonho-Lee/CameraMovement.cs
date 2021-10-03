@@ -13,6 +13,7 @@ public class CameraMovement : MonoBehaviour
 
     private Renderer object_renderer;
     private Material object_mat;
+    private Admin_Wall admin_wall;
 
     void Start()
     {
@@ -64,13 +65,8 @@ public class CameraMovement : MonoBehaviour
         {
             if(hit.transform.tag == "Wall") 
             {
-                object_renderer = hit.collider.gameObject.GetComponentInChildren<Renderer>();
-                object_mat = object_renderer.material;
-
-                Color mat_color = object_mat.color;
-                mat_color.a = 0.3f;
-
-                object_mat.color = mat_color;
+                admin_wall = hit.transform.GetComponent<Admin_Wall>();
+                admin_wall.Change_Mat();
             }
         }
 
