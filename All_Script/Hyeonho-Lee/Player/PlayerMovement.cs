@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public bool is_dash;
     public bool is_attack;
     public bool is_defence;
+    public bool is_damage;
     public bool lock_move;
     public bool lock_attack;
     public bool lock_dash;
@@ -26,12 +27,19 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 camera_forward, hit_position;
 
     public GameObject defence_object;
+    public Material damage_mat;
+    private Material object_mat;
 
     private Rigidbody rigidbody;
+    private PlayerStatus player_status;
+    private Renderer renderer;
 
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        player_status = GetComponent<PlayerStatus>();
+        renderer = GameObject.Find("Player_Renderer").GetComponent<Renderer>();
+        object_mat = renderer.material;
         Reset_Status();
     }
 
@@ -117,6 +125,12 @@ public class PlayerMovement : MonoBehaviour
             move_speed = speed_backup;
             defence_object.gameObject.SetActive(false);
         }
+
+        if (is_damage) {
+            renderer.material = damage_mat;
+        }else {
+            renderer.material = object_mat;
+        }
     }
 
     void Move(float horizontal, float vertical)
@@ -195,5 +209,23 @@ public class PlayerMovement : MonoBehaviour
     void Add_Force(Vector3 dir, float force)
     {
         rigidbody.AddForce(dir * force, ForceMode.Force);
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if(other.tag == "Attack")
+        {
+            StartCoroutine(Is_Damage(1.0f));
+        }
+    }
+
+    IEnumerator Is_Damage(float delay)
+    {
+        if (!is_damage) {
+            is_damage = true;
+            player_status.Player_Damage();
+            yield return new WaitForSeconds(delay);
+            is_damage = false;
+        }
     }
 }
