@@ -7,6 +7,7 @@ public class BossAttack_Area : MonoBehaviour
     public bool is_box;
     public bool is_sphere;
     public bool is_capsule;
+    public bool is_mesh;
 
     public float spawn_time;
     public float destroy_time;
@@ -16,23 +17,28 @@ public class BossAttack_Area : MonoBehaviour
     private SphereCollider sphere_collider;
     private BoxCollider box_collider;
     private CapsuleCollider capsule_collider;
+    private MeshCollider mesh_collider;
     private Renderer renderer;
 
     void Start()
     {
         renderer = GetComponent<Renderer>();
 
-        if (is_box && !is_sphere && !is_capsule)
+        if (is_box && !is_sphere && !is_capsule && !is_mesh)
         {
             Enter_Box();
         }
 
-        if (!is_box && is_sphere && !is_capsule) {
+        if (!is_box && is_sphere && !is_capsule && !is_mesh) {
             Enter_Sphere();
         }
 
-        if (!is_box && !is_sphere && is_capsule) {
+        if (!is_box && !is_sphere && is_capsule && !is_mesh) {
             Enter_Capsule();
+        }
+
+        if (!is_box && !is_sphere && !is_capsule && is_mesh) {
+            Enter_Mesh();
         }
     }
 
@@ -57,6 +63,14 @@ public class BossAttack_Area : MonoBehaviour
         capsule_collider = GetComponent<CapsuleCollider>();
         capsule_collider.enabled = false;
         StartCoroutine(Spawn(capsule_collider, spawn_time));
+        Destroy(this.gameObject, spawn_time + destroy_time);
+    }
+
+    void Enter_Mesh()
+    {
+        mesh_collider = GetComponent<MeshCollider>();
+        mesh_collider.enabled = false;
+        StartCoroutine(Spawn(mesh_collider, spawn_time));
         Destroy(this.gameObject, spawn_time + destroy_time);
     }
 
