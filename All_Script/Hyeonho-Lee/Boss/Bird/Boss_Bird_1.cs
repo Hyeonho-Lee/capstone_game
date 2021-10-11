@@ -12,7 +12,7 @@ public class Boss_Bird_1 : MonoBehaviour
     public bool is_wait;
 
     public GameObject attack_prefab, wait_prefab;
-    private GameObject attack_1, attack_2, attack_3;
+    private GameObject player, attack_1, attack_2, attack_3;
 
     private Vector3 forward;
     private Vector3 right_45;
@@ -20,15 +20,12 @@ public class Boss_Bird_1 : MonoBehaviour
 
     void Start()
     {
-        forward = transform.forward;
-        right_45 = Quaternion.Euler(0f, 45f, 0f) * forward;
-        left_45 = Quaternion.Euler(0f, 315f, 0f) * forward;
-        StartCoroutine(Is_Wait(wait_time));
+        //Attack();
     }
 
     void Update()
     {
-        if(is_attack_1) 
+        if (is_attack_1) 
         {
             attack_1.transform.position += forward * move_speed * Time.deltaTime;
             attack_2.transform.position += right_45 * move_speed * Time.deltaTime;
@@ -39,6 +36,12 @@ public class Boss_Bird_1 : MonoBehaviour
     IEnumerator Is_Attack(float delay)
     {
         is_attack_1 = true;
+
+        player = GameObject.Find("Player").gameObject;
+        forward = (player.transform.position - this.transform.position).normalized;
+        right_45 = Quaternion.Euler(0f, 45f, 0f) * forward;
+        left_45 = Quaternion.Euler(0f, 315f, 0f) * forward;
+
         attack_1 = Instantiate(attack_prefab, this.transform);
         attack_2 = Instantiate(attack_prefab, this.transform);
         attack_3 = Instantiate(attack_prefab, this.transform);
@@ -52,4 +55,9 @@ public class Boss_Bird_1 : MonoBehaviour
         StartCoroutine(Is_Attack(move_time));
     }
 
+    [ContextMenu("Attack")]
+    public void Attack()
+    {
+        StartCoroutine(Is_Wait(wait_time));
+    }
 }

@@ -44,5 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawn_delay: 0.5
+  count: 100
   range: {x: 5, y: 0, z: 5}
   attack_prefab: {fileID: 6636686603181926773, guid: c5492d1b7ad19d74b8566605218436bf, type: 3}

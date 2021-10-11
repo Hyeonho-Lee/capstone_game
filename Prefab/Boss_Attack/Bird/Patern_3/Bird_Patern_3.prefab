@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8509838598399310959
+--- !u!1 &4358908527840373669
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8509838598399310944}
-  - component: {fileID: 8509838598399310945}
+  - component: {fileID: 4358908527840373670}
+  - component: {fileID: 4358908527840373671}
   m_Layer: 0
-  m_Name: Bird_Patern_1
+  m_Name: Bird_Patern_3
   m_TagString: Boss_Patern_Bird
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8509838598399310944
+--- !u!4 &4358908527840373670
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8509838598399310959}
+  m_GameObject: {fileID: 4358908527840373669}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,22 +31,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8509838598399310945
+--- !u!114 &4358908527840373671
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8509838598399310959}
+  m_GameObject: {fileID: 4358908527840373669}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e71bf56ff707e0408cfa726c2f8e409, type: 3}
+  m_Script: {fileID: 11500000, guid: a25073be10203aa41a06acb61424f2ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move_speed: 20
-  move_time: 3
-  wait_time: 3
-  is_attack_1: 0
-  is_wait: 0
-  attack_prefab: {fileID: 557504827972076610, guid: 6210f0c2adcafdf4f81a54b34685e4a0, type: 3}
-  wait_prefab: {fileID: 7190013534428327360, guid: 045ef6c9d45f29545994601d27256971, type: 3}
+  spawn_delay: 4.4
+  is_follow: 0
+  attack_prefab: {fileID: 2471578582947822975, guid: ff1f07a18386e20429b5343493366d6f, type: 3}
