@@ -34,8 +34,8 @@ public class CameraMovement : MonoBehaviour
     void Reset_Status()
     {
         camera_angle = 45.0f;
-        offset.y = 12.0f;
-        offset.z = -12.0f;
+        offset.y = 22.0f;
+        offset.z = -24.0f;
     }
 
     void Find_GameObject(string name)

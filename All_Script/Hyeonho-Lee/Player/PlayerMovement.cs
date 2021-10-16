@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(Attack(attack_time));
         }
 
-        if (!is_attack && Input.GetMouseButtonDown(1)) {
+        if (!is_attack && !is_dash && Input.GetMouseButtonDown(1)) {
             is_defence = true;
         }
 
