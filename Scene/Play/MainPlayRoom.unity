@@ -927,63 +927,63 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory:
   - inv_index: 0
+    item_index: 50
+    item_count: 3
+  - inv_index: 1
+    item_index: 23
+    item_count: 1
+  - inv_index: 2
+    item_index: 67
+    item_count: 2000
+  - inv_index: 3
     item_index: 0
     item_count: 0
-  - inv_index: 0
+  - inv_index: 4
     item_index: 0
     item_count: 0
-  - inv_index: 0
+  - inv_index: 5
     item_index: 0
     item_count: 0
-  - inv_index: 0
+  - inv_index: 6
     item_index: 0
     item_count: 0
-  - inv_index: 0
+  - inv_index: 7
     item_index: 0
     item_count: 0
-  - inv_index: 0
+  - inv_index: 8
     item_index: 0
     item_count: 0
-  - inv_index: 0
+  - inv_index: 9
     item_index: 0
     item_count: 0
-  - inv_index: 0
+  - inv_index: 10
     item_index: 0
     item_count: 0
-  - inv_index: 0
+  - inv_index: 11
     item_index: 0
     item_count: 0
-  - inv_index: 0
+  - inv_index: 12
     item_index: 0
     item_count: 0
-  - inv_index: 0
+  - inv_index: 13
     item_index: 0
     item_count: 0
-  - inv_index: 0
+  - inv_index: 14
     item_index: 0
     item_count: 0
-  - inv_index: 0
+  - inv_index: 15
     item_index: 0
     item_count: 0
-  - inv_index: 0
+  - inv_index: 16
     item_index: 0
     item_count: 0
-  - inv_index: 0
+  - inv_index: 17
     item_index: 0
     item_count: 0
-  - inv_index: 0
+  - inv_index: 18
     item_index: 0
     item_count: 0
-  - inv_index: 0
-    item_index: 0
-    item_count: 0
-  - inv_index: 0
-    item_index: 0
-    item_count: 0
-  - inv_index: 0
-    item_index: 0
-    item_count: 0
-  - inv_index: 0
+  - inv_index: 19
     item_index: 0
     item_count: 0
 --- !u!4 &1515560800 stripped
