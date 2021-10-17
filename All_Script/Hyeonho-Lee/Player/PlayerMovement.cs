@@ -40,13 +40,14 @@ public class PlayerMovement : MonoBehaviour
         player_status = GameObject.Find("System").GetComponent<PlayerStatus>();
         renderer = GameObject.Find("Player_Renderer").GetComponent<Renderer>();
         object_mat = renderer.material;
+        player_status.Stat_Load();
+        Reset_Status();
     }
 
     void Update()
     {
         Input_Key();
         Check_Value();
-        Reset_Status();
     }
 
     void FixedUpdate()

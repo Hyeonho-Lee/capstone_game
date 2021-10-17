@@ -23,7 +23,7 @@ public class PlayerStatus : MonoBehaviour
 
     void Start()
     {
-        Stat_Load();
+        //Stat_Load();
     }
 
     [ContextMenu("Stat_Create")]

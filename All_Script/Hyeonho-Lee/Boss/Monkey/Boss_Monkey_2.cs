@@ -12,15 +12,20 @@ public class Boss_Monkey_2 : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(Attack_Spawn(attack_1, 0f));
-        StartCoroutine(Attack_Spawn(attack_2, interval_time));
-        StartCoroutine(Attack_Spawn(attack_3, interval_time * 2f));
-        Destroy(this.gameObject, interval_time * 3f);
+        //Attack();
     }
 
     IEnumerator Attack_Spawn(GameObject attack_object, float delay)
     {
         yield return new WaitForSeconds(delay);
-        Instantiate(attack_object);
+        Instantiate(attack_object, this.transform);
+    }
+
+    [ContextMenu("Attack")]
+    public void Attack()
+    {
+        StartCoroutine(Attack_Spawn(attack_1, 0f));
+        StartCoroutine(Attack_Spawn(attack_2, interval_time));
+        StartCoroutine(Attack_Spawn(attack_3, interval_time * 2f));
     }
 }
