@@ -1,0 +1,32 @@
+{
+  "items": [
+    {
+      "index": 1,
+      "name": "화염의 파편",
+      "desc": "오니에서 흘러나온 파편으로 화염이 깃들어 있다.\n3개를 모아 마을로 가보자",
+      "image": "../Image/red_particle.png",
+      "count": 1
+    },
+    {
+      "index": 2,
+      "name": "바위의 파편",
+      "desc": "오니에서 흘러나온 파편으로 바위가 깃들어 있다.\n3개를 모아 마을로 가보자",
+      "image": "../Image/stone_particle.png",
+      "count": 1
+    },
+    {
+      "index": 3,
+      "name": "번개의 파편",
+      "desc": "오니에서 흘러나온 파편으로 번개가 깃들어 있다.\n3개를 모아 마을로 가보자",
+      "image": "../Image/light_particle.png",
+      "count": 1
+    },
+    {
+      "index": 4,
+      "name": "복숭아 씨앗",
+      "desc": "복숭아에서 떨어진 씨앗으로 밝게 빛나고 있다.\n3개를 모아 마을로 가보자.",
+      "image": "../Image/peach_particle.png",
+      "count": 1
+    }
+  ]
+}

@@ -37,16 +37,16 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
-        player_status = GetComponent<PlayerStatus>();
+        player_status = GameObject.Find("System").GetComponent<PlayerStatus>();
         renderer = GameObject.Find("Player_Renderer").GetComponent<Renderer>();
         object_mat = renderer.material;
-        Reset_Status();
     }
 
     void Update()
     {
         Input_Key();
         Check_Value();
+        Reset_Status();
     }
 
     void FixedUpdate()
@@ -65,13 +65,14 @@ public class PlayerMovement : MonoBehaviour
 
     void Reset_Status()
     {
-        move_speed = 15.0f;
+        move_speed = player_status.player_stat.move_speed;
         speed_backup = move_speed;
         rotate_speed = 20.0f;
         dash_speed = 1500.0f;
         dash_time = 0.35f;
-        attack_time = 0.5f;
+        attack_time = player_status.player_stat.attack_speed;
     }
+
 
     void Input_Key()
     {

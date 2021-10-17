@@ -852,6 +852,140 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff35f3f7494b8d842a9d1df5fa7e6a69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1451153646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451153644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab6c9cfd39f52cd4e956c82bae4feacc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemtable:
+  - index: 0
+    name: "\uD654\uC5FC\uC758 \uD30C\uD3B8"
+    desc: "\uC624\uB2C8\uC5D0\uC11C \uD758\uB7EC\uB098\uC628 \uD30C\uD3B8\uC73C\uB85C
+      \uD654\uC5FC\uC774 \uAE43\uB4E4\uC5B4 \uC788\uB2E4.\n3\uAC1C\uB97C \uBAA8\uC544
+      \uB9C8\uC744\uB85C \uAC00\uBCF4\uC790"
+    image: ../Image/red_particle.png
+    count: 1
+  - index: 0
+    name: "\uBC14\uC704\uC758 \uD30C\uD3B8"
+    desc: "\uC624\uB2C8\uC5D0\uC11C \uD758\uB7EC\uB098\uC628 \uD30C\uD3B8\uC73C\uB85C
+      \uBC14\uC704\uAC00 \uAE43\uB4E4\uC5B4 \uC788\uB2E4.\n3\uAC1C\uB97C \uBAA8\uC544
+      \uB9C8\uC744\uB85C \uAC00\uBCF4\uC790"
+    image: ../Image/stone_particle.png
+    count: 1
+  - index: 0
+    name: "\uBC88\uAC1C\uC758 \uD30C\uD3B8"
+    desc: "\uC624\uB2C8\uC5D0\uC11C \uD758\uB7EC\uB098\uC628 \uD30C\uD3B8\uC73C\uB85C
+      \uBC88\uAC1C\uAC00 \uAE43\uB4E4\uC5B4 \uC788\uB2E4.\n3\uAC1C\uB97C \uBAA8\uC544
+      \uB9C8\uC744\uB85C \uAC00\uBCF4\uC790"
+    image: ../Image/light_particle.png
+    count: 1
+  - index: 0
+    name: "\uBCF5\uC22D\uC544 \uC528\uC557"
+    desc: "\uBCF5\uC22D\uC544\uC5D0\uC11C \uB5A8\uC5B4\uC9C4 \uC528\uC557\uC73C\uB85C
+      \uBC1D\uAC8C \uBE5B\uB098\uACE0 \uC788\uB2E4.\n3\uAC1C\uB97C \uBAA8\uC544 \uB9C8\uC744\uB85C
+      \uAC00\uBCF4\uC790."
+    image: ../Image/peach_particle.png
+    count: 1
+--- !u!114 &1451153647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451153644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52e5cd40be665724e8ed28b7f42667f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player_stat:
+    health: 0
+    move_speed: 0
+    attack_speed: 0
+    attack_damage: 0
+    life_count: 0
+    potion_count: 0
+    potion_recovery: 0
+--- !u!114 &1451153649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451153644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8edf040de71a58340b024e273cb58bc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory:
+  - inv_index: 0
+    item_index: 0
+    item_count: 0
+  - inv_index: 0
+    item_index: 0
+    item_count: 0
+  - inv_index: 0
+    item_index: 0
+    item_count: 0
+  - inv_index: 0
+    item_index: 0
+    item_count: 0
+  - inv_index: 0
+    item_index: 0
+    item_count: 0
+  - inv_index: 0
+    item_index: 0
+    item_count: 0
+  - inv_index: 0
+    item_index: 0
+    item_count: 0
+  - inv_index: 0
+    item_index: 0
+    item_count: 0
+  - inv_index: 0
+    item_index: 0
+    item_count: 0
+  - inv_index: 0
+    item_index: 0
+    item_count: 0
+  - inv_index: 0
+    item_index: 0
+    item_count: 0
+  - inv_index: 0
+    item_index: 0
+    item_count: 0
+  - inv_index: 0
+    item_index: 0
+    item_count: 0
+  - inv_index: 0
+    item_index: 0
+    item_count: 0
+  - inv_index: 0
+    item_index: 0
+    item_count: 0
+  - inv_index: 0
+    item_index: 0
+    item_count: 0
+  - inv_index: 0
+    item_index: 0
+    item_count: 0
+  - inv_index: 0
+    item_index: 0
+    item_count: 0
+  - inv_index: 0
+    item_index: 0
+    item_count: 0
+  - inv_index: 0
+    item_index: 0
+    item_count: 0
 --- !u!4 &1515560800 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2983338926237649838, guid: 531cc55b4a8a0cc49af8c900432db756, type: 3}
@@ -1085,7 +1219,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3381160498073496653, guid: 531cc55b4a8a0cc49af8c900432db756, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 531cc55b4a8a0cc49af8c900432db756, type: 3}
 --- !u!4 &1962794026 stripped
 Transform:

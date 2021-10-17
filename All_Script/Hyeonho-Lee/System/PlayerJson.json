@@ -1,0 +1,9 @@
+{
+  "health": 10.0,
+  "move_speed": 15.0,
+  "attack_speed": 0.5,
+  "attack_damage": 1.0,
+  "life_count": 1,
+  "potion_count": 3,
+  "potion_recovery": 10.0
+}
