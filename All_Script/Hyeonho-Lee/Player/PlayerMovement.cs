@@ -11,6 +11,9 @@ public class PlayerMovement : MonoBehaviour
     public float dash_time;
     public float attack_time;
 
+    public float attack_combo;
+    private float speed_backup;
+
     public bool is_move;
     public bool is_dash;
     public bool is_attack;
@@ -19,26 +22,29 @@ public class PlayerMovement : MonoBehaviour
     public bool lock_move;
     public bool lock_attack;
     public bool lock_dash;
-
-    private float speed_backup;
+    public bool attack_start;
 
     public Vector3 movement_vector;
     private Vector3 dash_vector;
     private Vector3 camera_forward, hit_position;
 
     public GameObject defence_object;
+    public GameObject attack_object_1;
     public Material damage_mat;
     private Material object_mat;
 
     private Rigidbody rigidbody;
     private PlayerStatus player_status;
     private Renderer renderer;
+    private BoxCollider attack_collider;
+    private Animator animator;
 
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
         player_status = GameObject.Find("System").GetComponent<PlayerStatus>();
         renderer = GameObject.Find("Player_Renderer").GetComponent<Renderer>();
+        animator = GetComponent<Animator>();
         object_mat = renderer.material;
         player_status.Stat_Load();
         Reset_Status();
@@ -71,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
         rotate_speed = 20.0f;
         dash_speed = 1500.0f;
         dash_time = 0.35f;
-        attack_time = player_status.player_stat.attack_speed;
+        attack_combo = 0;
     }
 
 
@@ -85,7 +91,8 @@ public class PlayerMovement : MonoBehaviour
         camera_forward = Vector3.Normalize(camera_forward);
 
         if (!lock_attack && !is_dash && Input.GetMouseButtonDown(0)) {
-            StartCoroutine(Attack(attack_time));
+
+            StartCoroutine(Attack(0.5f));
         }
 
         if (!is_attack && !is_dash && Input.GetMouseButtonDown(1)) {
@@ -202,9 +209,11 @@ public class PlayerMovement : MonoBehaviour
             is_attack = true;
             lock_dash = true;
             Mouse_Watch();
+            attack_object_1.gameObject.SetActive(true);
             yield return new WaitForSeconds(delay);
             is_attack = false;
             lock_dash = false;
+            attack_object_1.gameObject.SetActive(false);
         }
     }
 
@@ -217,7 +226,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if(other.tag == "Attack")
         {
-            StartCoroutine(Is_Damage(1.0f));
+            StartCoroutine(Is_Damage(0.5f));
         }
     }
 

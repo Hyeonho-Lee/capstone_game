@@ -37,6 +37,7 @@ public class Boss_Wolf_2 : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         follow_attack = Instantiate(attacks);
+        Destroy(follow_attack, 7.3f);
         StartCoroutine(Follow_Attack(follow_delay));
     }
 

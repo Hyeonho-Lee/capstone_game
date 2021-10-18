@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7159007575331232264}
   - component: {fileID: 7159007575331232267}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Bird
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,7 +91,7 @@ SphereCollider:
   m_GameObject: {fileID: 7159007575331232261}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -143,6 +143,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb76156141ed5e949a5173bb036a1413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bird_health: 0
+  damage_mat: {fileID: 2100000, guid: 5e1b65d3e2395eb4a85cf75309cdc9e1, type: 2}
 --- !u!1001 &7159007575855642550
 PrefabInstance:
   m_ObjectHideFlags: 0

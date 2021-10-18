@@ -61,6 +61,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dash_speed: 150
-  dash_wait_time: 3
+  dash_wait_time: 2
   count_dash: 3
   attack_prefab: {fileID: 5607414991641188973, guid: 88a5f32adecf25e429e8110b380e8908, type: 3}
