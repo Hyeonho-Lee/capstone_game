@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -19,4 +19,4 @@ public class Boss_Monkey_Button : Editor
             patern.Patern_2();
         }
     }
-}
+}*/

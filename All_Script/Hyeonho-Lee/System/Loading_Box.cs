@@ -8,6 +8,13 @@ public class Loading_Box : MonoBehaviour
     public string scene_name;
     public string trigger_scene;
 
+    private World_Admin world_admin;
+
+    void Start()
+    {
+        world_admin = GameObject.Find("System").GetComponent<World_Admin>();
+    }
+
     void OnTriggerExit(Collider other)
     {
         if(other.CompareTag("Player")) 
@@ -16,9 +23,11 @@ public class Loading_Box : MonoBehaviour
             if (dir < 90f) 
             {
                 StartCoroutine(Load_Scene());
-            }else 
+                world_admin.Check_Scene_Exit();
+            } else 
             {
                 StartCoroutine(UnLoad_Scene());
+                world_admin.Check_Scene_Enter();
             }
         }
     }

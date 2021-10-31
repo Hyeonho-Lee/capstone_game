@@ -4,35 +4,93 @@ using UnityEngine;
 
 public class Player_Attack : MonoBehaviour
 {
+    public int attack_count;
+
+    public bool is_attack;
+    private bool is_smash;
+
+    private GameObject player;
+
     private PlayerMovement playermovement;
     private Animator animator;
 
     void Start()
     {
-        playermovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
-        animator = GameObject.Find("Player").GetComponent<Animator>();
+        player = GameObject.Find("Player");
+        playermovement = player.GetComponent<PlayerMovement>();
+        animator = player.GetComponent<Animator>();
     }
 
-    public void Combo_True()
+    public void Attack_Start()
     {
-        playermovement.attack_start = true;
+        is_attack = true;
+        playermovement.is_attack = true;
+        playermovement.lock_dash = true;
     }
 
-    public void Combo() 
+    public void Attack_Next()
     {
-        if (playermovement.attack_combo == 2) 
+        if (!is_smash) {
+            if (attack_count == 2) {
+                animator.Play("attack_2");
+                playermovement.attack_object_1.gameObject.SetActive(false);
+                playermovement.attack_object_2.gameObject.SetActive(true);
+            }
+            if (attack_count == 3) {
+                animator.Play("attack_3");
+                playermovement.attack_object_2.gameObject.SetActive(false);
+                playermovement.attack_object_3.gameObject.SetActive(true);
+            }
+
+            if (attack_count >= 4) {
+                attack_count = 0;
+                return;
+            }
+        }
+    }
+
+    public void Attack_Reset()
+    {
+        is_attack = false;
+        playermovement.is_attack = false;
+        playermovement.lock_dash = false;
+        playermovement.attack_object_1.gameObject.SetActive(false);
+        playermovement.attack_object_2.gameObject.SetActive(false);
+        playermovement.attack_object_3.gameObject.SetActive(false);
+        is_smash = false;
+        attack_count = 0;
+    }
+
+    public void Attack()
+    {
+        if (attack_count == 0) 
         {
-            animator.Play("attack_2");
+            animator.Play("attack_1");
+            playermovement.attack_object_1.gameObject.SetActive(true);
+            attack_count = 1;
+            return;
         }
 
-        if (playermovement.attack_combo == 3) {
-            animator.Play("attack_3");
+        if (attack_count != 0) 
+        {
+            if (is_attack) 
+            {
+                is_attack = false;
+                playermovement.is_attack = false;
+                playermovement.lock_dash = false;
+                attack_count += 1;
+            }
         }
     }
 
-    public void Combo_Reset()
+    public void Smash()
     {
-        playermovement.attack_start = false;
-        playermovement.attack_combo = 0;
+        if (is_attack) 
+        {
+            is_attack = false;
+            playermovement.is_attack = false;
+            playermovement.lock_dash = false;
+            is_smash = true;
+        }
     }
 }

@@ -11,7 +11,6 @@ public class PlayerMovement : MonoBehaviour
     public float dash_time;
     public float attack_time;
 
-    public float attack_combo;
     private float speed_backup;
 
     public bool is_move;
@@ -19,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     public bool is_attack;
     public bool is_defence;
     public bool is_damage;
+    public bool is_pick;
     public bool lock_move;
     public bool lock_attack;
     public bool lock_dash;
@@ -30,35 +30,54 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject defence_object;
     public GameObject attack_object_1;
+    public GameObject attack_object_2;
+    public GameObject attack_object_3;
     public Material damage_mat;
     private Material object_mat;
+    private Material hat_mat;
+    private Material weapon_mat;
+    private Material weaponslot_mat;
 
     private Rigidbody rigidbody;
     private PlayerStatus player_status;
+    private Player_Attack player_attack;
     private Renderer renderer;
+    private Renderer renderer_1;
+    private Renderer renderer_2;
+    private Renderer renderer_3;
     private BoxCollider attack_collider;
     private Animator animator;
 
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
-        player_status = GameObject.Find("System").GetComponent<PlayerStatus>();
+        //player_status = GameObject.Find("System").GetComponent<PlayerStatus>();
+        player_attack = GetComponent<Player_Attack>();
         renderer = GameObject.Find("Player_Renderer").GetComponent<Renderer>();
+        renderer_1 = GameObject.Find("hat").GetComponent<Renderer>();
+        renderer_2 = GameObject.Find("weapon").GetComponent<Renderer>();
+        renderer_3 = GameObject.Find("weapon_slot").GetComponent<Renderer>();
         animator = GetComponent<Animator>();
         object_mat = renderer.material;
-        player_status.Stat_Load();
+        hat_mat = renderer_1.material;
+        weapon_mat = renderer_2.material;
+        weaponslot_mat = renderer_3.material;
+        //player_status.Stat_Load();
         Reset_Status();
     }
 
     void Update()
     {
-        Input_Key();
         Check_Value();
+        Input_Key();
     }
 
     void FixedUpdate()
     {
-        Move(h_axis, v_axis);
+        if (!is_attack) 
+        {
+            Move(h_axis, v_axis);
+        }
 
         if (is_dash) {
             lock_move = true;
@@ -72,12 +91,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Reset_Status()
     {
-        move_speed = player_status.player_stat.move_speed;
+        move_speed = 15.0f;
         speed_backup = move_speed;
         rotate_speed = 20.0f;
-        dash_speed = 1500.0f;
+        dash_speed = 750.0f;
         dash_time = 0.35f;
-        attack_combo = 0;
     }
 
 
@@ -90,12 +108,12 @@ public class PlayerMovement : MonoBehaviour
         camera_forward.y = 0;
         camera_forward = Vector3.Normalize(camera_forward);
 
-        if (!lock_attack && !is_dash && Input.GetMouseButtonDown(0)) {
-
+        if (!lock_attack && !is_dash && !is_pick && Input.GetMouseButtonDown(0)) {
             StartCoroutine(Attack(0.5f));
+            player_attack.Attack();
         }
 
-        if (!is_attack && !is_dash && Input.GetMouseButtonDown(1)) {
+        if (!is_attack && !is_dash && !is_pick && Input.GetMouseButtonDown(1)) {
             is_defence = true;
         }
 
@@ -106,6 +124,10 @@ public class PlayerMovement : MonoBehaviour
         if (!is_defence && !lock_dash && Input.GetKeyDown(KeyCode.Space)) {
             StartCoroutine(Dash(dash_time));
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            Application.Quit();
+        }
     }
 
     void Check_Value()
@@ -115,12 +137,7 @@ public class PlayerMovement : MonoBehaviour
         else
             is_move = true;
 
-        if (lock_move) {
-            h_axis = 0;
-            v_axis = 0;
-        }
-
-        if (is_attack) {
+        if (lock_move || is_attack || is_pick) {
             h_axis = 0;
             v_axis = 0;
         }
@@ -137,8 +154,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (is_damage) {
             renderer.material = damage_mat;
-        }else {
+            renderer_1.material = damage_mat;
+            renderer_2.material = damage_mat;
+            renderer_3.material = damage_mat;
+        } else {
             renderer.material = object_mat;
+            renderer_1.material = hat_mat;
+            renderer_2.material = weapon_mat;
+            renderer_3.material = weaponslot_mat;
         }
     }
 
@@ -207,13 +230,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!is_attack) {
             is_attack = true;
-            lock_dash = true;
-            Mouse_Watch();
-            attack_object_1.gameObject.SetActive(true);
+            //Mouse_Watch();
             yield return new WaitForSeconds(delay);
-            is_attack = false;
-            lock_dash = false;
-            attack_object_1.gameObject.SetActive(false);
         }
     }
 
@@ -234,7 +252,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!is_damage) {
             is_damage = true;
-            player_status.Player_Damage();
+            //player_status.Player_Damage();
             yield return new WaitForSeconds(delay);
             is_damage = false;
         }

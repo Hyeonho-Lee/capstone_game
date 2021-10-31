@@ -12,6 +12,7 @@ public class Boss_Bird : MonoBehaviour
     private Material object_mat;
 
     private Renderer renderer;
+    private Boss_UI_Controller boss_ui;
     private Boss_Bird_1 patern_1;
     private Boss_Bird_2 patern_2;
     private Boss_Bird_3 patern_3;
@@ -20,6 +21,7 @@ public class Boss_Bird : MonoBehaviour
     void Start()
     {
         renderer = GameObject.Find("Bird").GetComponent<Renderer>();
+        boss_ui = GameObject.Find("System").GetComponent<Boss_UI_Controller>();
         patern_1 = GameObject.Find("Bird_Patern_1").GetComponent<Boss_Bird_1>();
         patern_2 = GameObject.Find("Bird_Patern_2").GetComponent<Boss_Bird_2>();
         patern_3 = GameObject.Find("Bird_Patern_3").GetComponent<Boss_Bird_3>();
@@ -41,6 +43,7 @@ public class Boss_Bird : MonoBehaviour
         }
 
         if (bird_health <= 0) {
+            boss_ui.is_boss = false;
             StopCoroutine("Random_Patern");
             Destroy(this.gameObject);
         }
@@ -55,7 +58,7 @@ public class Boss_Bird : MonoBehaviour
 
     void Reset_Status()
     {
-        bird_health = 100.0f;
+        bird_health = 10.0f;
         object_mat = renderer.material;
     }
 

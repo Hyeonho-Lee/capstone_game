@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -23,4 +23,4 @@ public class Boss_Wolf_Button : Editor
             patern.Patern_3();
         }
     }
-}
+}*/

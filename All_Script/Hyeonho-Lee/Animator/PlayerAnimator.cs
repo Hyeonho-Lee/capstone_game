@@ -22,15 +22,13 @@ public class PlayerAnimator : MonoBehaviour
     {
         animator.SetFloat("horizontal", playermovement.h_axis);
         animator.SetFloat("vertical", playermovement.v_axis);
-        animator.SetFloat("attack_combo", playermovement.attack_combo);
         animator.SetBool("is_move", playermovement.is_move);
         animator.SetBool("is_dash", playermovement.is_dash);
         animator.SetBool("is_defence", playermovement.is_defence);
-        animator.SetBool("is_attack", playermovement.is_attack);
+        animator.SetBool("is_pick", playermovement.is_pick);
 
-        if (playermovement.is_attack == true) 
-        {
-            animator.Play("attack_1");
+        if (playermovement.is_pick == true) {
+            animator.Play("Item_Pick");
         }
     }
 }

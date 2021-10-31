@@ -9,7 +9,6 @@ public class Boss_Wolf_3 : MonoBehaviour
     public float spawn_delay;
 
     public GameObject spawning_mobs;
-    public GameObject spawn_attack;
 
     private GameObject player;
     private Vector3 player_position;
@@ -35,9 +34,7 @@ public class Boss_Wolf_3 : MonoBehaviour
     IEnumerator Random_Spawn(float delay)
     {
         yield return new WaitForSeconds(delay);
-        spawn_attack = Instantiate(spawn_attack, this.transform);
-        spawn_attack.transform.position = Get_Random_Position(spawning_range);
-        GameObject spawn = Instantiate(spawning_mobs, spawn_attack.transform.position, Quaternion.identity, this.transform);
+        GameObject spawn = Instantiate(spawning_mobs, Get_Random_Position(spawning_range), Quaternion.identity, this.transform);
         Destroy(spawn, 10f);
     }
 
@@ -46,8 +43,6 @@ public class Boss_Wolf_3 : MonoBehaviour
         for (int i = 0; i < amount; i++) 
         {
             StartCoroutine(Random_Spawn(spawn_delay * i));
-            //Instantiate(spawn_attack, Get_Random_Position(spawning_range), Quaternion.identity, this.transform);
-            //Instantiate(mob, Get_Random_Position(spawning_range), Quaternion.identity, this.transform);
         }
     }
 

@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -27,4 +27,4 @@ public class Boss_Bird_Button : Editor
             patern.Patern_4();
         }
     }
-}
+}*/

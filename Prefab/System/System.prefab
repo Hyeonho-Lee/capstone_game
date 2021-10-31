@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1451153646}
   - component: {fileID: 1451153647}
   - component: {fileID: 1451153649}
+  - component: {fileID: 5149038627369833763}
   m_Layer: 0
   m_Name: System
   m_TagString: Untagged
@@ -63,6 +64,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff35f3f7494b8d842a9d1df5fa7e6a69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  world:
+  - world_name: 
+    is_world_enter: 0
+  - world_name: 
+    is_world_enter: 0
+  - world_name: 
+    is_world_enter: 0
+  - world_name: 
+    is_world_enter: 0
+  - world_name: 
+    is_world_enter: 0
+  - world_name: 
+    is_world_enter: 0
+  - world_name: 
+    is_world_enter: 0
+  - world_name: 
+    is_world_enter: 0
+  - world_name: 
+    is_world_enter: 0
+  - world_name: 
+    is_world_enter: 0
+  - world_name: 
+    is_world_enter: 0
+  - world_name: 
+    is_world_enter: 0
 --- !u!114 &1451153646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,3 +223,18 @@ MonoBehaviour:
   - inv_index: 19
     item_index: 0
     item_count: 0
+--- !u!114 &5149038627369833763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9189876316694512404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f53237de7cff2b45b74f90e54f554b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boss_ui: {fileID: 0}
+  boss_health_bar: {fileID: 0}
+  boss_text_name: {fileID: 0}
