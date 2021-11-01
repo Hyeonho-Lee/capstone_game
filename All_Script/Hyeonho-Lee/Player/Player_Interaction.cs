@@ -38,7 +38,9 @@ public class Player_Interaction : MonoBehaviour
                 }
 
                 if (item_distance.tag == "NPC") {
-                    Debug.Log("NPC 대화중");
+                    NPC_Trigger trigger = item_distance.GetComponent<NPC_Trigger>();
+                    trigger.Dialogue_Trigger();
+                    //Debug.Log("NPC 대화중");
                 }
             }
         }

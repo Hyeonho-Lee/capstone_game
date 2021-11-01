@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     public bool is_damage;
     public bool is_pick;
     public bool is_skill;
+    public bool is_talk;
     public bool lock_move;
     public bool lock_attack;
     public bool lock_dash;
@@ -105,19 +106,22 @@ public class PlayerMovement : MonoBehaviour
 
     void Input_Key()
     {
-        h_axis = Input.GetAxisRaw("Horizontal");
-        v_axis = Input.GetAxisRaw("Vertical");
+        if (!is_talk)
+        {
+            h_axis = Input.GetAxisRaw("Horizontal");
+            v_axis = Input.GetAxisRaw("Vertical");
+        }
 
         camera_forward = Camera.main.transform.forward;
         camera_forward.y = 0;
         camera_forward = Vector3.Normalize(camera_forward);
 
-        if (!lock_attack && !is_dash && !is_pick && !is_skill && Input.GetMouseButtonDown(0)) {
+        if (!lock_attack && !is_dash && !is_pick && !is_skill && !is_talk && Input.GetMouseButtonDown(0)) {
             StartCoroutine(Attack(0.5f));
             player_attack.Attack();
         }
 
-        if (!is_attack && !is_dash && !is_pick && !is_skill && Input.GetMouseButtonDown(1)) {
+        if (!is_attack && !is_dash && !is_pick && !is_skill && !is_talk && Input.GetMouseButtonDown(1)) {
             is_defence = true;
         }
 
@@ -125,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
             is_defence = false;
         }
 
-        if (!is_defence && !lock_dash && !is_pick && !is_skill && Input.GetKeyDown(KeyCode.Space)) {
+        if (!is_defence && !lock_dash && !is_pick && !is_skill && !is_talk && Input.GetKeyDown(KeyCode.Space)) {
             StartCoroutine(Dash(dash_time));
         }
 
@@ -133,19 +137,19 @@ public class PlayerMovement : MonoBehaviour
             Application.Quit();
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+        if (!is_talk && Input.GetKeyDown(KeyCode.Alpha1)) {
             StartCoroutine(player_skill.Skill_1());
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2)) {
+        if (!is_talk && Input.GetKeyDown(KeyCode.Alpha2)) {
             StartCoroutine(player_skill.Skill_2());
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3)) {
+        if (!is_talk && Input.GetKeyDown(KeyCode.Alpha3)) {
             StartCoroutine(player_skill.Skill_3());
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha4)) {
+        if (!is_talk && Input.GetKeyDown(KeyCode.Alpha4)) {
             StartCoroutine(player_skill.Skill_4());
         }
     }
@@ -157,7 +161,7 @@ public class PlayerMovement : MonoBehaviour
         else
             is_move = true;
 
-        if (lock_move || is_attack || is_pick || is_skill) {
+        if (lock_move || is_attack || is_pick || is_skill || is_talk) {
             h_axis = 0;
             v_axis = 0;
         }
