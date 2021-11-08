@@ -14,23 +14,20 @@ public class NPC_Manager : MonoBehaviour
     private Queue<string> sentences;
 
     private PlayerMovement movement;
-
-    void Start()
-    {
-        sentences = new Queue<string>();
-        movement = GameObject.Find("Player").GetComponent<PlayerMovement>();
-    }
+    private TextMeshProUGUI text_mesh;
 
     public void Start_Dialogue(NPC_Dialogue dialogue)
     {
+        sentences = new Queue<string>();
+        movement = GameObject.Find("Player").GetComponent<PlayerMovement>();
         //Debug.Log("시작: " + dialogue.name);
         dialogue_ui.SetActive(true);
         image_input = images[dialogue.image_index];
         image_input.SetActive(true);
         movement.is_talk = true;
 
-        TextMeshProUGUI textmesh = name.GetComponent<TextMeshProUGUI>();
-        textmesh.text = dialogue.name.ToString();
+        text_mesh = name.GetComponent<TextMeshProUGUI>();
+        text_mesh.text = dialogue.name.ToString();
 
         sentences.Clear();
 
@@ -44,23 +41,34 @@ public class NPC_Manager : MonoBehaviour
 
     public void Next_Sentence()
     {
-        if (sentences.Count == 0) 
-        {
+        if (sentences.Count <= 0) {
             End_Dialogue();
             return;
         }
 
         string sentence = sentences.Dequeue();
-        TextMeshProUGUI textmesh = text.GetComponent<TextMeshProUGUI>();
-        textmesh.text = sentence.ToString();
+        text_mesh = text.GetComponent<TextMeshProUGUI>();
+        StopAllCoroutines();
+        StartCoroutine(delay(sentence));
+
+        //text_mesh.text = sentence.ToString();
         //Debug.Log(sentence);
     }
 
     void End_Dialogue()
     {
-        //Debug.Log("대화 끝");
+        Debug.Log("대화 끝");
         dialogue_ui.SetActive(false);
         image_input.SetActive(false);
         movement.is_talk = false;
+    }
+
+    IEnumerator delay(string sentence)
+    {
+        text_mesh.text = "";
+        foreach(char letter in sentence.ToCharArray()) {
+            text_mesh.text += letter;
+            yield return new WaitForSeconds(0.05f);
+        }
     }
 }

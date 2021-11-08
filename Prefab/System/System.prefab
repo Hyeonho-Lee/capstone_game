@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 1451153647}
   - component: {fileID: 1451153649}
   - component: {fileID: 5149038627369833763}
+  - component: {fileID: 9189876316252196991}
+  - component: {fileID: 1331079162}
   m_Layer: 0
   m_Name: System
   m_TagString: Untagged
@@ -96,7 +98,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9189876316694512404}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab6c9cfd39f52cd4e956c82bae4feacc, type: 3}
   m_Name: 
@@ -137,19 +139,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9189876316694512404}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 52e5cd40be665724e8ed28b7f42667f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player_stat:
-    health: 0
-    move_speed: 0
-    attack_speed: 0
-    attack_damage: 0
-    life_count: 0
-    potion_count: 0
-    potion_recovery: 0
+    health: 10
+    move_speed: 15
+    attack_speed: 0.5
+    attack_damage: 1
+    life_count: 1
+    potion_count: 3
+    potion_recovery: 10
 --- !u!114 &1451153649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,7 +159,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9189876316694512404}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8edf040de71a58340b024e273cb58bc9, type: 3}
   m_Name: 
@@ -238,3 +240,43 @@ MonoBehaviour:
   boss_ui: {fileID: 0}
   boss_health_bar: {fileID: 0}
   boss_text_name: {fileID: 0}
+  is_boss: 0
+--- !u!114 &9189876316252196991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9189876316694512404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0376622e61bef14a85209ab736a70bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue_ui: {fileID: 0}
+  name: {fileID: 0}
+  text: {fileID: 0}
+  images:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &1331079162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9189876316694512404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceabe931cb84cf544b0d44b6b30011db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory_ui: {fileID: 0}
+  status: {fileID: 0}
+  skill_slot: {fileID: 0}

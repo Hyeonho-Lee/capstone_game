@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public float dash_speed;
     public float dash_time;
     public float attack_time;
+    public float infinity_time;
 
     private float speed_backup;
 
@@ -18,9 +19,12 @@ public class PlayerMovement : MonoBehaviour
     public bool is_attack;
     public bool is_defence;
     public bool is_damage;
+    public bool is_defence_damage;
+    public bool is_infinity;
     public bool is_pick;
     public bool is_skill;
     public bool is_talk;
+    public bool is_inventory;
     public bool lock_move;
     public bool lock_attack;
     public bool lock_dash;
@@ -45,19 +49,24 @@ public class PlayerMovement : MonoBehaviour
     private PlayerStatus player_status;
     private Player_Attack player_attack;
     private Player_Skill player_skill;
+    private PlayerEffect player_effect;
+    private UI_Inventory ui_inventory;
     private Renderer renderer;
     private Renderer renderer_1;
     private Renderer renderer_2;
     private Renderer renderer_3;
-    private BoxCollider attack_collider;
+    private CapsuleCollider collider;
     private Animator animator;
 
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        collider = GetComponent<CapsuleCollider>();
         //player_status = GameObject.Find("System").GetComponent<PlayerStatus>();
+        ui_inventory = GameObject.Find("System").GetComponent<UI_Inventory>();
         player_attack = GetComponent<Player_Attack>();
         player_skill = GetComponent<Player_Skill>();
+        player_effect = GetComponent<PlayerEffect>();
         renderer = GameObject.Find("Player_Renderer").GetComponent<Renderer>();
         renderer_1 = GameObject.Find("hat").GetComponent<Renderer>();
         renderer_2 = GameObject.Find("weapon").GetComponent<Renderer>();
@@ -101,6 +110,7 @@ public class PlayerMovement : MonoBehaviour
         rotate_speed = 20.0f;
         dash_speed = 1500.0f;
         dash_time = 0.35f;
+        infinity_time = 0.35f;
     }
 
 
@@ -116,12 +126,12 @@ public class PlayerMovement : MonoBehaviour
         camera_forward.y = 0;
         camera_forward = Vector3.Normalize(camera_forward);
 
-        if (!lock_attack && !is_dash && !is_pick && !is_skill && !is_talk && Input.GetMouseButtonDown(0)) {
+        if (!lock_attack && !is_dash && !is_pick && !is_skill && !is_talk && !is_inventory && Input.GetMouseButtonDown(0)) {
             StartCoroutine(Attack(0.5f));
             player_attack.Attack();
         }
 
-        if (!is_attack && !is_dash && !is_pick && !is_skill && !is_talk && Input.GetMouseButtonDown(1)) {
+        if (!is_attack && !is_dash && !is_pick && !is_skill && !is_talk && !is_inventory && Input.GetMouseButtonDown(1)) {
             is_defence = true;
         }
 
@@ -129,27 +139,38 @@ public class PlayerMovement : MonoBehaviour
             is_defence = false;
         }
 
-        if (!is_defence && !lock_dash && !is_pick && !is_skill && !is_talk && Input.GetKeyDown(KeyCode.Space)) {
+        if (!is_defence && !lock_dash && !is_pick && !is_skill && !is_talk && !is_inventory && Input.GetKeyDown(KeyCode.Space)) {
             StartCoroutine(Dash(dash_time));
+            StartCoroutine(Infinity(infinity_time));
+            StartCoroutine(player_effect.Dash_Effect());
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Application.Quit();
         }
 
-        if (!is_talk && Input.GetKeyDown(KeyCode.Alpha1)) {
+        if (!is_talk && Input.GetKeyDown(KeyCode.Tab)) {
+            //Debug.Log("인벤토리 염");
+            if (is_inventory) {
+                ui_inventory.Inventory_Exit();
+            }else {
+                ui_inventory.Inventory_Start();
+            }
+        }
+
+        if (!is_talk && !is_inventory && Input.GetKeyDown(KeyCode.Alpha1)) {
             StartCoroutine(player_skill.Skill_1());
         }
 
-        if (!is_talk && Input.GetKeyDown(KeyCode.Alpha2)) {
+        if (!is_talk && !is_inventory && Input.GetKeyDown(KeyCode.Alpha2)) {
             StartCoroutine(player_skill.Skill_2());
         }
 
-        if (!is_talk && Input.GetKeyDown(KeyCode.Alpha3)) {
+        if (!is_talk && !is_inventory && Input.GetKeyDown(KeyCode.Alpha3)) {
             StartCoroutine(player_skill.Skill_3());
         }
 
-        if (!is_talk && Input.GetKeyDown(KeyCode.Alpha4)) {
+        if (!is_talk && !is_inventory && Input.GetKeyDown(KeyCode.Alpha4)) {
             StartCoroutine(player_skill.Skill_4());
         }
     }
@@ -161,9 +182,14 @@ public class PlayerMovement : MonoBehaviour
         else
             is_move = true;
 
-        if (lock_move || is_attack || is_pick || is_skill || is_talk) {
+        if (lock_move || is_attack || is_pick || is_skill || is_talk || is_inventory) {
             h_axis = 0;
             v_axis = 0;
+        }
+
+        if (is_dash && is_talk || is_dash && is_pick || is_attack && is_talk || is_attack && is_pick) {
+            is_dash = false;
+            is_attack = false;
         }
 
         if (is_defence) {
@@ -264,21 +290,45 @@ public class PlayerMovement : MonoBehaviour
         rigidbody.AddForce(dir * force, ForceMode.Force);
     }
 
-    void OnTriggerStay(Collider other)
+    void OnCollisionStay(Collision other)
     {
-        if(other.tag == "Attack")
+        if(other.gameObject.tag == "Attack")
         {
-            StartCoroutine(Is_Damage(0.5f));
+            if(!is_defence) {
+                StartCoroutine(Is_Damage(1.0f));
+            }else {
+                StartCoroutine(Is_Defence(1.0f));
+            }
         }
     }
 
     IEnumerator Is_Damage(float delay)
     {
-        if (!is_damage) {
+        if (!is_damage && !is_infinity) {
             is_damage = true;
             //player_status.Player_Damage();
+            Debug.Log("플레이어 데미지 받음");
             yield return new WaitForSeconds(delay);
             is_damage = false;
+        }
+    }
+
+    IEnumerator Is_Defence(float delay)
+    {
+        if (!is_defence_damage) {
+            is_defence_damage = true;
+            Debug.Log("쉴드 데미지 받음");
+            yield return new WaitForSeconds(delay);
+            is_defence_damage = false;
+        }
+    }
+
+    IEnumerator Infinity(float delay)
+    {
+        if (!is_infinity) {
+            is_infinity = true;
+            yield return new WaitForSeconds(delay);
+            is_infinity = false;
         }
     }
 }

@@ -8,49 +8,96 @@ public class Player_Interaction : MonoBehaviour
     public List<GameObject> eventList = new List<GameObject>(); // 아이템이 들어갈 리스트
 
     public GameObject item_ui;
+    public GameObject talk_effect;
+    private GameObject talk;
 
     private GameObject player; // 플레이어 정보
     public GameObject item_distance;
 
+    private bool is_effect;
+
     PlayerMovement movement;
+    NPC_Manager npc_manager;
     TextMeshProUGUI textmesh;
     Animator ui_animator;
 
     void Start()
     {
+        npc_manager = GameObject.Find("System").GetComponent<NPC_Manager>();
         player = GameObject.Find("Player");
         movement = player.GetComponent<PlayerMovement>();
-        transform.position = player.transform.position;
+        transform.position = player.transform.position + new Vector3(0f, 1.2f, 0f);
         transform.SetParent(player.transform);
     }
 
     void Update()
     {
         // F버튼을 누루면 주변에 아이템이 있냐에 따라 실행
-        if (Input.GetKeyDown(KeyCode.F) && eventList.Count > 0) {
-            if (item_distance != null && movement.is_pick != true) {
+        if (!movement.is_inventory && Input.GetKeyDown(KeyCode.F) && eventList.Count > 0 && !movement.is_talk) {
+            if (item_distance != null && !movement.is_pick) {
+                
                 if(item_distance.tag == "Item") {
+                    item_distance = FindPickableItemClosestToPlayer();
                     StartCoroutine(PickItem(item_distance, 1.2f));
                 }
 
                 if (item_distance.tag == "Door") {
                     Debug.Log("문이 열렷다");
                 }
-
-                if (item_distance.tag == "NPC") {
+                
+                if (item_distance.tag == "NPC" || item_distance.tag == "Shop") {
+                    item_distance = FindPickableItemClosestToPlayer();
                     NPC_Trigger trigger = item_distance.GetComponent<NPC_Trigger>();
-                    trigger.Dialogue_Trigger();
+                    trigger.Dialogue_Trigger(); trigger.Dialogue_Trigger();
                     //Debug.Log("NPC 대화중");
                 }
             }
         }
 
+        if (item_distance != null && !is_effect) {
+            is_effect = true;
+            if (talk == null) {
+                talk = Instantiate(talk_effect, item_distance.transform);
+            }
+            talk.transform.position = item_distance.transform.position + new Vector3(0f, -1.2f, 0f);
+        }
+
         if (eventList.Count > 0) {
             item_distance = FindPickableItemClosestToPlayer();
-            item_ui.SetActive(true);
+
+            if (talk != null) {
+                if (item_distance.tag == "Item") {
+                    talk.transform.position = item_distance.transform.position + new Vector3(0f, -0.5f, 0f);
+                    talk.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                }
+                if (item_distance.tag == "NPC") {
+                    talk.transform.position = item_distance.transform.position + new Vector3(0f, -1.2f, 0f);
+                    talk.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
+                }
+                if (item_distance.tag == "Shop") {
+                    talk.transform.position = item_distance.transform.position + new Vector3(0f, -0.1f, 0f);
+                    talk.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+                }
+
+                if (GameObject.FindGameObjectsWithTag("Talk_Effect").Length != 1) {
+                    Destroy(GameObject.FindGameObjectsWithTag("Talk_Effect")[1]);
+                }
+            }
+
+            if (item_ui != null) {
+                item_ui.SetActive(true);
+            }
             Check_Tag();
         } else {
-            item_ui.SetActive(false);
+            if(item_ui != null) {
+                item_ui.SetActive(false);
+            }
+        }
+
+        if (eventList.Count <= 0) {
+            item_distance = null;
+            is_effect = false;
+            Destroy(talk);
         }
     }
 
@@ -64,7 +111,7 @@ public class Player_Interaction : MonoBehaviour
             Change_Message("F 열기");
         }
 
-        if (item_distance.tag == "NPC") {
+        if (item_distance.tag == "NPC" || item_distance.tag == "Shop") {
             Change_Message("F 대화");
         }
     }
@@ -78,7 +125,7 @@ public class Player_Interaction : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // 아이템이 들어오면 아이템 리스트에 추가
-        if (other.tag == "Item" || other.tag == "NPC" || other.tag == "Door") {
+        if (other.tag == "Item" || other.tag == "NPC" || other.tag == "Door" || other.tag == "Shop") {
             eventList.Add(other.gameObject);
         }
     }
@@ -86,7 +133,7 @@ public class Player_Interaction : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         // 아이템이 들어오면 아이템 리스트에서 제거
-        if (other.tag == "Item" || other.tag == "NPC" || other.tag == "Door") {
+        if (other.tag == "Item" || other.tag == "NPC" || other.tag == "Door" || other.tag == "Shop") {
             eventList.Remove(other.gameObject);
         }
     }

@@ -5,9 +5,11 @@ using UnityEngine;
 public class NPC_Trigger : MonoBehaviour
 {
     public NPC_Dialogue dialogue;
+    private NPC_Manager manager;
 
     public void Dialogue_Trigger()
     {
-        FindObjectOfType<NPC_Manager>().Start_Dialogue(dialogue);
+        manager = GameObject.Find("System").GetComponent<NPC_Manager>();
+        manager.Start_Dialogue(dialogue);
     }
 }
