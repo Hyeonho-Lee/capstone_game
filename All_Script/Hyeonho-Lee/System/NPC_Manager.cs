@@ -57,7 +57,7 @@ public class NPC_Manager : MonoBehaviour
 
     void End_Dialogue()
     {
-        Debug.Log("대화 끝");
+        //Debug.Log("대화 끝");
         dialogue_ui.SetActive(false);
         image_input.SetActive(false);
         movement.is_talk = false;

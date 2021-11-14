@@ -70143,6 +70143,13 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 0
+    functionName: Attack_Sound
+    data: 
+    objectReferenceParameter: {fileID: 8300000, guid: 8f178668a97f5974d830a23dc889d936, type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.083333336
     functionName: Attack_Start
     data: 

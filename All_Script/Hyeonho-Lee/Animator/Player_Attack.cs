@@ -9,16 +9,19 @@ public class Player_Attack : MonoBehaviour
     public bool is_attack;
     private bool is_smash;
 
+    public AudioClip attack_1_sound;
     private GameObject player;
 
     private PlayerMovement playermovement;
     private Animator animator;
+    private AudioSource audio;
 
     void Start()
     {
         player = GameObject.Find("Player");
         playermovement = player.GetComponent<PlayerMovement>();
         animator = player.GetComponent<Animator>();
+        audio = player.GetComponent<AudioSource>();
     }
 
     public void Attack_Start()
@@ -92,5 +95,10 @@ public class Player_Attack : MonoBehaviour
             playermovement.lock_dash = false;
             is_smash = true;
         }
+    }
+
+    public void Attack_Sound(AudioClip clip)
+    {
+        audio.PlayOneShot(clip);
     }
 }

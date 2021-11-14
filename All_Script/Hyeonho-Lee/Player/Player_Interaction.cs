@@ -15,26 +15,37 @@ public class Player_Interaction : MonoBehaviour
     public GameObject item_distance;
 
     private bool is_effect;
+    private bool is_area;
 
     PlayerMovement movement;
     NPC_Manager npc_manager;
     TextMeshProUGUI textmesh;
     Animator ui_animator;
+    SphereCollider collider;
 
     void Start()
     {
         npc_manager = GameObject.Find("System").GetComponent<NPC_Manager>();
         player = GameObject.Find("Player");
         movement = player.GetComponent<PlayerMovement>();
+        collider = GetComponent<SphereCollider>();
         transform.position = player.transform.position + new Vector3(0f, 1.2f, 0f);
         transform.SetParent(player.transform);
     }
 
     void Update()
     {
+        if (is_area) {
+            collider.enabled = true;
+        }else {
+            collider.enabled = false;
+        }
+
         // F버튼을 누루면 주변에 아이템이 있냐에 따라 실행
-        if (!movement.is_inventory && Input.GetKeyDown(KeyCode.F) && eventList.Count > 0 && !movement.is_talk) {
-            if (item_distance != null && !movement.is_pick) {
+        if (Input.GetKeyDown(KeyCode.F) && !movement.is_inventory && !movement.is_talk) {
+            StartCoroutine(Check_Area(1.0f));
+
+            if (item_distance != null && !movement.is_pick && eventList.Count > 0) {
                 
                 if(item_distance.tag == "Item") {
                     item_distance = FindPickableItemClosestToPlayer();
@@ -138,6 +149,11 @@ public class Player_Interaction : MonoBehaviour
         }
     }
 
+    void Remove_Trigger()
+    {
+        eventList = new List<GameObject>();
+    }
+
     IEnumerator PickItem(GameObject item, float delay)
     {
         eventList.Remove(item);
@@ -202,5 +218,15 @@ public class Player_Interaction : MonoBehaviour
         }
 
         return itemToPick;
+    }
+
+    IEnumerator Check_Area(float delay)
+    {
+        if (!is_area) {
+            is_area = true;
+            yield return new WaitForSeconds(delay);
+            is_area = false;
+            Remove_Trigger();
+        }
     }
 }

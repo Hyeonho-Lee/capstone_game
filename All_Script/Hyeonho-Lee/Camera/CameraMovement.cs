@@ -6,11 +6,11 @@ public class CameraMovement : MonoBehaviour
 {
     public float camera_angle;
     public Vector3 offset;
-    private GameObject player;
 
     public float distance;
     public Vector3 dir;
 
+    private GameObject player;
     private Renderer object_renderer;
     private Material object_mat;
     private Admin_Wall admin_wall;
@@ -42,10 +42,10 @@ public class CameraMovement : MonoBehaviour
     {
         if (GameObject.FindWithTag(name)) {
             player = GameObject.Find(name);
-            Debug.Log("Console: " + name + "를 발견하였습니다.");
+            //Debug.Log("Console: " + name + "를 발견하였습니다.");
         }else {
             player = new GameObject("default");
-            Debug.Log("Console: " + name + "가 없습니다.");
+            //Debug.Log("Console: " + name + "가 없습니다.");
         }
     }
 
@@ -65,8 +65,8 @@ public class CameraMovement : MonoBehaviour
         {
             if(hit.transform.tag == "Wall") 
             {
-                admin_wall = hit.transform.GetComponent<Admin_Wall>();
-                admin_wall.Change_Mat();
+                admin_wall = hit.collider.gameObject.GetComponent<Admin_Wall>();
+                StartCoroutine(admin_wall.Change_Material(3.0f));
             }
         }
 

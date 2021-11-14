@@ -45,7 +45,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawn_delay: 5
   follow_delay: 2.5
+  cooltime: 0
   is_follow: 0
+  real_time: 0
+  is_cool: 0
   attack_prefab_1: {fileID: 383105726113653631, guid: bc327d24848e6b449bd5118fa5a67d5f, type: 3}
   attack_prefab_2: {fileID: 395432101997432805, guid: 96339e0ef486cde47b3fafbc178cef88, type: 3}
   attack_prefab_3: {fileID: 660714647863322752, guid: 1d10a78f38e433348a957b5a59b5e353, type: 3}

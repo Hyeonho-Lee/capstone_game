@@ -12,15 +12,18 @@ public class Enemy_0 : MonoBehaviour
 
     public Material damage_mat;
     public Material die_mat;
+    public AudioClip enemy_hit_sound;
     private Material object_mat;
 
     private Renderer renderer;
     private BoxCollider collider;
+    private AudioSource audio;
 
     void Start()
     {
         renderer = GetComponent<Renderer>();
         collider = GetComponent<BoxCollider>();
+        audio = GetComponent<AudioSource>();
         Reset_Status();
     }
 
@@ -67,6 +70,7 @@ public class Enemy_0 : MonoBehaviour
         if (!is_damage) {
             is_damage = true;
             enemy_health -= 1.0f;
+            audio.PlayOneShot(enemy_hit_sound);
             yield return new WaitForSeconds(delay);
             is_damage = false;
         }

@@ -8,24 +8,40 @@ public class Boss_Wolf_1 : MonoBehaviour
     public float dash_wait_time;
     public int count_dash = 3;
 
+    public float cooltime = 15f;
+    public float real_time;
+    public bool is_cool;
+
     private Vector3 dir;
 
     public GameObject attack_prefab;
     private GameObject target;
+    private GameObject wolf;
 
     private Rigidbody rigidbody;
+    private Wolf_FSM wolf_fsm;
 
     void Start()
     {
-        //Attack();
+        wolf = GameObject.Find("Wolf_Patern");
+        wolf_fsm = wolf.GetComponent<Wolf_FSM>();
     }
 
     private void Update()
     {
-        if (dir != Vector3.zero) 
+        if (dir != Vector3.zero && wolf_fsm.is_attack_1)
         {
+            Wolf_Heading_Vec();
             Quaternion newRotation = Quaternion.LookRotation(dir * 10f * Time.deltaTime);
-            transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, 10f * Time.deltaTime);
+            wolf.transform.rotation = Quaternion.Slerp(wolf.transform.rotation, newRotation, 10f * Time.deltaTime);
+        }
+
+        if (!is_cool) {
+            real_time += Time.deltaTime;
+
+            if (real_time >= cooltime) {
+                is_cool = true;
+            }
         }
     }
 
@@ -34,8 +50,6 @@ public class Boss_Wolf_1 : MonoBehaviour
         Vector3 heading = target.transform.position - transform.position;
         var distance = heading.magnitude;
         dir = heading / distance;
-
-        //Debug.Log(dir);
 
         return dir;
     }
@@ -59,8 +73,12 @@ public class Boss_Wolf_1 : MonoBehaviour
     [ContextMenu("Attack")]
     public void Attack()
     {
-        rigidbody = GetComponent<Rigidbody>();
-        target = GameObject.Find("Player");
-        StartCoroutine(Dash(dash_wait_time));
+        if (is_cool && wolf_fsm.is_attack_1) {
+            target = GameObject.Find("Player");
+            rigidbody = wolf.GetComponent<Rigidbody>();
+            StartCoroutine(Dash(dash_wait_time));
+            real_time = 0;
+            is_cool = false;
+        }
     }
 }

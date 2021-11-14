@@ -26,10 +26,10 @@ public class Boss_Wolf : MonoBehaviour
         patern_3 = GameObject.Find("Wolf_Patern_3").GetComponent<Boss_Wolf_3>();
         Reset_Status();
 
-        for(int i = 0; i < 100; i++) 
+        /*for(int i = 0; i < 100; i++) 
         {
             StartCoroutine(Random_Patern(15f * i));
-        }
+        }*/
     }
 
     void Update()
@@ -45,7 +45,6 @@ public class Boss_Wolf : MonoBehaviour
         if (wolf_health <= 0) 
         {
             boss_ui.is_boss = false;
-            StopCoroutine("Random_Patern");
             Destroy(this.gameObject);
         }
     }
@@ -73,42 +72,5 @@ public class Boss_Wolf : MonoBehaviour
             yield return new WaitForSeconds(delay);
             is_damage = false;
         }
-    }
-
-    IEnumerator Random_Patern(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        int random = Random.Range(1, 4);
-
-        if(random == 1) 
-        {
-            Patern_1();
-        }
-
-        if (random == 2) 
-        {
-            Patern_2();
-        }
-
-        if (random == 3)
-        {
-            Patern_3();
-        }
-    }
-
-
-    public void Patern_1()
-    {
-        patern_1.Attack();
-    }
-
-    public void Patern_2()
-    {
-        patern_2.Attack();
-    }
-
-    public void Patern_3()
-    {
-        patern_3.Attack();
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
     public float dash_time;
     public float attack_time;
     public float infinity_time;
+    public float stamina;
+    public float health = 10f;
 
     private float speed_backup;
 
@@ -25,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     public bool is_skill;
     public bool is_talk;
     public bool is_inventory;
+    public bool is_stamina;
     public bool lock_move;
     public bool lock_attack;
     public bool lock_dash;
@@ -39,6 +43,8 @@ public class PlayerMovement : MonoBehaviour
     public GameObject attack_object_2;
     public GameObject attack_object_3;
     public GameObject skill_object_3;
+    public AudioClip hit_sound;
+    public Slider stamina_bar;
     public Material damage_mat;
     private Material object_mat;
     private Material hat_mat;
@@ -51,12 +57,14 @@ public class PlayerMovement : MonoBehaviour
     private Player_Skill player_skill;
     private PlayerEffect player_effect;
     private UI_Inventory ui_inventory;
+    private Health_Controller health_controller;
     private Renderer renderer;
     private Renderer renderer_1;
     private Renderer renderer_2;
     private Renderer renderer_3;
     private CapsuleCollider collider;
     private Animator animator;
+    private AudioSource audio;
 
     void Start()
     {
@@ -64,9 +72,11 @@ public class PlayerMovement : MonoBehaviour
         collider = GetComponent<CapsuleCollider>();
         //player_status = GameObject.Find("System").GetComponent<PlayerStatus>();
         ui_inventory = GameObject.Find("System").GetComponent<UI_Inventory>();
+        health_controller = GameObject.Find("System").GetComponent<Health_Controller>();
         player_attack = GetComponent<Player_Attack>();
         player_skill = GetComponent<Player_Skill>();
         player_effect = GetComponent<PlayerEffect>();
+        audio = GetComponent<AudioSource>();
         renderer = GameObject.Find("Player_Renderer").GetComponent<Renderer>();
         renderer_1 = GameObject.Find("hat").GetComponent<Renderer>();
         renderer_2 = GameObject.Find("weapon").GetComponent<Renderer>();
@@ -78,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
         weaponslot_mat = renderer_3.material;
         //player_status.Stat_Load();
         Reset_Status();
+        health_controller.Check_Health(health);
     }
 
     void Update()
@@ -111,6 +122,8 @@ public class PlayerMovement : MonoBehaviour
         dash_speed = 1500.0f;
         dash_time = 0.35f;
         infinity_time = 0.35f;
+        stamina = 100.0f;
+        is_stamina = true;
     }
 
 
@@ -131,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
             player_attack.Attack();
         }
 
-        if (!is_attack && !is_dash && !is_pick && !is_skill && !is_talk && !is_inventory && Input.GetMouseButtonDown(1)) {
+        if (!is_attack && !is_dash && !is_pick && !is_skill && !is_talk && !is_inventory && Input.GetMouseButtonDown(1) && stamina >= 0) {
             is_defence = true;
         }
 
@@ -139,10 +152,8 @@ public class PlayerMovement : MonoBehaviour
             is_defence = false;
         }
 
-        if (!is_defence && !lock_dash && !is_pick && !is_skill && !is_talk && !is_inventory && Input.GetKeyDown(KeyCode.Space)) {
+        if (!is_attack && !is_defence && !lock_dash && !is_pick && !is_skill && !is_talk && !is_inventory && Input.GetKeyDown(KeyCode.Space)) {
             StartCoroutine(Dash(dash_time));
-            StartCoroutine(Infinity(infinity_time));
-            StartCoroutine(player_effect.Dash_Effect());
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -213,6 +224,27 @@ public class PlayerMovement : MonoBehaviour
             renderer_2.material = weapon_mat;
             renderer_3.material = weaponslot_mat;
         }
+
+        if (is_stamina && stamina <= 100.0f) {
+            if(is_defence) {
+                stamina += Time.deltaTime * 2.5f;
+            }else {
+                stamina += Time.deltaTime * 5f;
+            }
+        }
+
+        if (!is_stamina && stamina <= 0) {
+            is_stamina = true;
+        }
+
+        if (stamina_bar != null) {
+            stamina_bar.value = stamina / 100;
+        }
+
+        if (health <= 0) {
+            Debug.Log("You Die");
+            health += 10;
+        }
     }
 
     void Move(float horizontal, float vertical)
@@ -266,13 +298,18 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator Dash(float delay)
     {
-        if (!is_dash) {
+        if (!is_dash && stamina >= 0f) {
             is_dash = true;
             lock_attack = true;
             dash_vector = new Vector3(transform.forward.x, 0, transform.forward.z);
+            StartCoroutine(Infinity(infinity_time));
+            StartCoroutine(player_effect.Dash_Effect());
+            stamina -= 25.0f;
+            is_stamina = false;
             yield return new WaitForSeconds(delay);
             is_dash = false;
             lock_attack = false;
+            is_stamina = true;
         }
     }
 
@@ -290,9 +327,9 @@ public class PlayerMovement : MonoBehaviour
         rigidbody.AddForce(dir * force, ForceMode.Force);
     }
 
-    void OnCollisionStay(Collision other)
+    void OnTriggerStay(Collider other)
     {
-        if(other.gameObject.tag == "Attack")
+        if(other.tag == "Attack")
         {
             if(!is_defence) {
                 StartCoroutine(Is_Damage(1.0f));
@@ -308,6 +345,9 @@ public class PlayerMovement : MonoBehaviour
             is_damage = true;
             //player_status.Player_Damage();
             Debug.Log("플레이어 데미지 받음");
+            audio.PlayOneShot(hit_sound);
+            health -= 1f;
+            health_controller.Check_Health(health);
             yield return new WaitForSeconds(delay);
             is_damage = false;
         }
@@ -317,9 +357,19 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!is_defence_damage) {
             is_defence_damage = true;
-            Debug.Log("쉴드 데미지 받음");
+            if (stamina >= 40.0f) {
+                Debug.Log("쉴드 데미지 받음");
+                stamina -= 40.0f;
+                is_stamina = false;
+            } else {
+                Debug.Log("플레이어 데미지 받음");
+                stamina -= 40.0f;
+                is_defence = false;
+                is_stamina = false;
+            }
             yield return new WaitForSeconds(delay);
             is_defence_damage = false;
+            is_stamina = true;
         }
     }
 
