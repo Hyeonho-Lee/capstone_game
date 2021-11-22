@@ -8,11 +8,12 @@ public class Boss_Move : MonoBehaviour
     {
         Vector3 move_dir = (player.transform.position - transform.position).normalized;
         transform.position += move_dir * speed * Time.deltaTime;
-        transform.LookAt(player.transform);
+        Rotate(player);
     }
 
     public void Rotate(GameObject player)
     {
-        transform.LookAt(player.transform);
+        Vector3 result = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
+        transform.LookAt(result);
     }
 }

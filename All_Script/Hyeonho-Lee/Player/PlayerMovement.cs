@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public float attack_time;
     public float infinity_time;
     public float stamina;
-    public float health = 10f;
+    public float health;
 
     private float speed_backup;
 
@@ -29,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
     public bool is_talk;
     public bool is_inventory;
     public bool is_stamina;
+    public bool is_die;
+    public bool is_test;
     public bool lock_move;
     public bool lock_attack;
     public bool lock_dash;
@@ -43,7 +45,6 @@ public class PlayerMovement : MonoBehaviour
     public GameObject attack_object_2;
     public GameObject attack_object_3;
     public GameObject skill_object_3;
-    public AudioClip hit_sound;
     public Slider stamina_bar;
     public Material damage_mat;
     private Material object_mat;
@@ -58,25 +59,35 @@ public class PlayerMovement : MonoBehaviour
     private PlayerEffect player_effect;
     private UI_Inventory ui_inventory;
     private Health_Controller health_controller;
+    private PlayerSound player_sound;
+    private World_Admin world_admin;
+    private Loading_Scene loading_scene;
+
     private Renderer renderer;
     private Renderer renderer_1;
     private Renderer renderer_2;
     private Renderer renderer_3;
     private CapsuleCollider collider;
     private Animator animator;
-    private AudioSource audio;
+    private Animator hit_animator;
+    private Animator die_animator;
 
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
         collider = GetComponent<CapsuleCollider>();
-        //player_status = GameObject.Find("System").GetComponent<PlayerStatus>();
+        player_status = GameObject.Find("System").GetComponent<PlayerStatus>();
         ui_inventory = GameObject.Find("System").GetComponent<UI_Inventory>();
         health_controller = GameObject.Find("System").GetComponent<Health_Controller>();
+        world_admin = GameObject.Find("System").GetComponent<World_Admin>();
+        loading_scene = GameObject.Find("System").GetComponent<Loading_Scene>();
+        hit_animator = GameObject.Find("hit_effect").GetComponent<Animator>();
+        die_animator = GameObject.Find("die_effect").GetComponent<Animator>();
         player_attack = GetComponent<Player_Attack>();
         player_skill = GetComponent<Player_Skill>();
         player_effect = GetComponent<PlayerEffect>();
-        audio = GetComponent<AudioSource>();
+        player_sound = GetComponent<PlayerSound>();
+
         renderer = GameObject.Find("Player_Renderer").GetComponent<Renderer>();
         renderer_1 = GameObject.Find("hat").GetComponent<Renderer>();
         renderer_2 = GameObject.Find("weapon").GetComponent<Renderer>();
@@ -86,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
         hat_mat = renderer_1.material;
         weapon_mat = renderer_2.material;
         weaponslot_mat = renderer_3.material;
-        //player_status.Stat_Load();
+        player_status.Stat_Load();
         Reset_Status();
         health_controller.Check_Health(health);
     }
@@ -116,7 +127,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Reset_Status()
     {
-        move_speed = 15.0f;
+        health = player_status.player_stat.health;
+        move_speed = player_status.player_stat.move_speed;
         speed_backup = move_speed;
         rotate_speed = 20.0f;
         dash_speed = 1500.0f;
@@ -139,12 +151,12 @@ public class PlayerMovement : MonoBehaviour
         camera_forward.y = 0;
         camera_forward = Vector3.Normalize(camera_forward);
 
-        if (!lock_attack && !is_dash && !is_pick && !is_skill && !is_talk && !is_inventory && Input.GetMouseButtonDown(0)) {
+        if (!lock_attack && !is_dash && !is_pick && !is_skill && !is_talk && !is_inventory && Input.GetMouseButtonDown(0) && !player_skill.is_heal && !is_die) {
             StartCoroutine(Attack(0.5f));
             player_attack.Attack();
         }
 
-        if (!is_attack && !is_dash && !is_pick && !is_skill && !is_talk && !is_inventory && Input.GetMouseButtonDown(1) && stamina >= 0) {
+        if (!is_attack && !is_dash && !is_pick && !is_skill && !is_talk && !is_inventory && Input.GetMouseButtonDown(1) && stamina >= 0 && !player_skill.is_heal && !is_die) {
             is_defence = true;
         }
 
@@ -152,7 +164,7 @@ public class PlayerMovement : MonoBehaviour
             is_defence = false;
         }
 
-        if (!is_attack && !is_defence && !lock_dash && !is_pick && !is_skill && !is_talk && !is_inventory && Input.GetKeyDown(KeyCode.Space)) {
+        if (!is_attack && !is_defence && !lock_dash && !is_pick && !is_skill && !is_talk && !is_inventory && Input.GetKeyDown(KeyCode.Space) && !player_skill.is_heal && !is_die) {
             StartCoroutine(Dash(dash_time));
         }
 
@@ -160,7 +172,7 @@ public class PlayerMovement : MonoBehaviour
             Application.Quit();
         }
 
-        if (!is_talk && Input.GetKeyDown(KeyCode.Tab)) {
+        if (!is_talk && Input.GetKeyDown(KeyCode.Tab) && !is_die) {
             //Debug.Log("인벤토리 염");
             if (is_inventory) {
                 ui_inventory.Inventory_Exit();
@@ -169,19 +181,19 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (!is_talk && !is_inventory && Input.GetKeyDown(KeyCode.Alpha1)) {
+        if (!is_talk && !is_inventory && Input.GetKeyDown(KeyCode.Alpha1) && !is_die) {
             StartCoroutine(player_skill.Skill_1());
         }
 
-        if (!is_talk && !is_inventory && Input.GetKeyDown(KeyCode.Alpha2)) {
+        if (!is_talk && !is_inventory && Input.GetKeyDown(KeyCode.Alpha2) && !is_die) {
             StartCoroutine(player_skill.Skill_2());
         }
 
-        if (!is_talk && !is_inventory && Input.GetKeyDown(KeyCode.Alpha3)) {
+        if (!is_talk && !is_inventory && Input.GetKeyDown(KeyCode.Alpha3) && !is_die) {
             StartCoroutine(player_skill.Skill_3());
         }
 
-        if (!is_talk && !is_inventory && Input.GetKeyDown(KeyCode.Alpha4)) {
+        if (!is_talk && !is_inventory && Input.GetKeyDown(KeyCode.Alpha4) && !is_die) {
             StartCoroutine(player_skill.Skill_4());
         }
     }
@@ -193,7 +205,7 @@ public class PlayerMovement : MonoBehaviour
         else
             is_move = true;
 
-        if (lock_move || is_attack || is_pick || is_skill || is_talk || is_inventory) {
+        if (lock_move || is_attack || is_pick || is_skill || is_talk || is_inventory || player_skill.is_heal || is_die) {
             h_axis = 0;
             v_axis = 0;
         }
@@ -241,8 +253,9 @@ public class PlayerMovement : MonoBehaviour
             stamina_bar.value = stamina / 100;
         }
 
-        if (health <= 0) {
-            Debug.Log("You Die");
+        if (health <= 0 && !is_test) {
+            StartCoroutine(Is_Die());
+        }else if (health <= 0 && is_test){
             health += 10;
         }
     }
@@ -306,6 +319,7 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(player_effect.Dash_Effect());
             stamina -= 25.0f;
             is_stamina = false;
+            player_sound.Dash_Sound_Play();
             yield return new WaitForSeconds(delay);
             is_dash = false;
             lock_attack = false;
@@ -341,11 +355,12 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator Is_Damage(float delay)
     {
-        if (!is_damage && !is_infinity) {
+        if (!is_damage && !is_infinity && !is_die) {
             is_damage = true;
-            //player_status.Player_Damage();
-            Debug.Log("플레이어 데미지 받음");
-            audio.PlayOneShot(hit_sound);
+            player_status.Player_Damage();
+            //Debug.Log("플레이어 데미지 받음");
+            player_sound.Player_Hit_Sound_Play();
+            hit_animator.Play("Hit");
             health -= 1f;
             health_controller.Check_Health(health);
             yield return new WaitForSeconds(delay);
@@ -355,15 +370,19 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator Is_Defence(float delay)
     {
-        if (!is_defence_damage) {
+        if (!is_defence_damage && !is_die) {
             is_defence_damage = true;
-            if (stamina >= 40.0f) {
-                Debug.Log("쉴드 데미지 받음");
-                stamina -= 40.0f;
+            if (stamina >= 20.0f) {
+                //Debug.Log("쉴드 데미지 받음");
+                player_sound.Shield_Sound_Play();
+                StartCoroutine(Infinity(1.0f));
+                stamina -= 20.0f;
                 is_stamina = false;
             } else {
-                Debug.Log("플레이어 데미지 받음");
-                stamina -= 40.0f;
+                //Debug.Log("플레이어 데미지 받음");
+                player_sound.Shield_Sound_Play();
+                StartCoroutine(Infinity(1.0f));
+                stamina -= 20.0f;
                 is_defence = false;
                 is_stamina = false;
             }
@@ -375,10 +394,23 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator Infinity(float delay)
     {
-        if (!is_infinity) {
+        if (!is_infinity && !is_die) {
             is_infinity = true;
             yield return new WaitForSeconds(delay);
             is_infinity = false;
+        }
+    }
+
+    IEnumerator Is_Die()
+    {
+        if (!is_die && !is_test) {
+            is_die = true;
+            animator.Play("dieing");
+            Debug.Log("유다희");
+            yield return new WaitForSeconds(3.0f);
+            die_animator.Play("die_effect");
+            yield return new WaitForSeconds(6.0f);
+            world_admin.Load_Scene(0);
         }
     }
 }

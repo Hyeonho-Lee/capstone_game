@@ -70144,9 +70144,9 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: Attack_Sound
+    functionName: Player_Attack_2_Sound_Play
     data: 
-    objectReferenceParameter: {fileID: 8300000, guid: 8f178668a97f5974d830a23dc889d936, type: 3}
+    objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

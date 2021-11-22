@@ -1,38 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Enemy_0 : MonoBehaviour
 {
-    public float enemy_health = 30f;
+    public string enemy_name;
+    public float enemy_health;
+    public float start_health;
     private float value;
+    public float distance;
+    public float font_size;
 
     private bool is_damage;
     private bool is_die;
 
-    public Material damage_mat;
-    public Material die_mat;
-    public AudioClip enemy_hit_sound;
-    private Material object_mat;
+    public GameObject die_effect;
 
-    private Renderer renderer;
-    private BoxCollider collider;
+    public AudioClip enemy_hit_sound;
+    private GameObject player;
+    private Slider health_ui;
+
+    private TextMeshPro textmeshs;
+    private CapsuleCollider collider;
     private AudioSource audio;
 
     void Start()
     {
-        renderer = GetComponent<Renderer>();
-        collider = GetComponent<BoxCollider>();
+        player = GameObject.Find("Player");
+        collider = GetComponent<CapsuleCollider>();
         audio = GetComponent<AudioSource>();
         Reset_Status();
     }
 
     void Update()
     {
-        if (is_damage) {
-            renderer.material = damage_mat;
-        } else {
-            renderer.material = object_mat;
+        distance = Vector3.Distance(transform.position, player.transform.position);
+
+        if (distance <= 22) {
+            if (distance >= 5) {
+                font_size = distance / 5 + 3;
+            }else {
+                font_size = 4;
+            }
+        }else {
+            font_size = 7;
+        }
+
+        if (health_ui != null) {
+            health_ui.value = enemy_health / start_health;
         }
 
         if (enemy_health <= 0) {
@@ -45,10 +62,24 @@ public class Enemy_0 : MonoBehaviour
             if (value <= 1f) {
                 value += Time.deltaTime * 0.2f;
             }
+        }
 
-            renderer = GetComponent<Renderer>();
-            renderer.material = die_mat;
-            renderer.material.SetFloat("_threshold", value);
+        if (transform.GetChild(0) != null) {
+            if (transform.GetChild(0).name == "3D Canvas") {
+                GameObject canvas = transform.GetChild(0).gameObject;
+                if (canvas.transform.GetChild(0).name == "Name") {
+                    GameObject name = canvas.transform.GetChild(0).gameObject;
+                    name.transform.LookAt(GameObject.Find("Main Camera").transform);
+                    textmeshs = name.GetComponent<TextMeshPro>();
+                    textmeshs.text = enemy_name;
+                    textmeshs.fontSize = font_size;
+                }
+                if (canvas.transform.GetChild(1).name == "Slider") {
+                    GameObject result = canvas.transform.GetChild(1).gameObject;
+                    result.transform.LookAt(GameObject.Find("Main Camera").transform);
+                    health_ui = result.GetComponent<Slider>();
+                }
+            }
         }
     }
 
@@ -61,8 +92,8 @@ public class Enemy_0 : MonoBehaviour
 
     void Reset_Status()
     {
-        //enemy_health = 30.0f;
-        object_mat = renderer.material;
+        //start_health = 30.0f;
+        enemy_health = start_health;
     }
 
     IEnumerator Is_Damage(float delay)
@@ -80,8 +111,10 @@ public class Enemy_0 : MonoBehaviour
     {
         is_die = true;
         value = 0;
-        collider.enabled = false;
-        Destroy(this.gameObject, 2.5f);
+        GameObject die_effects = Instantiate(die_effect);
+        die_effects.transform.position = this.transform.position;
+        Destroy(die_effects, 2.0f);
+        Destroy(this.gameObject, 0.2f);
         yield return null;
     }
 }

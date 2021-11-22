@@ -22,13 +22,24 @@ public class Item_Table : MonoBehaviour
     void Start()
     {
         //Item_Load();
+
+        FileInfo fi = new FileInfo(Application.dataPath + "/Resources/ItemJson.json");
+
+        if (fi.Exists) {
+            //Debug.Log("파일 있음");
+            Item_Load();
+        } else {
+            //Debug.Log("파일 없음");
+            Item_Create();
+            Item_Load();
+        }
     }
 
     [ContextMenu("Item_Load")]
     public void Item_Load()
     {
         itemtable = new List<Item>();
-        string text = Application.dataPath + "/Script/All_Script/Hyeonho-Lee/System/ItemJson.json";
+        string text = Application.dataPath + "/Resources/ItemJson.json";
         string text_data = File.ReadAllText(text);
 
         JObject data = JObject.Parse(text_data);
@@ -47,34 +58,58 @@ public class Item_Table : MonoBehaviour
         }
     }
 
-    [ContextMenu("Item_Save")]
+    [ContextMenu("Item_Create")]
+    public void Item_Create()
+    {
+        JObject Item1 = new JObject(
+           new JProperty("index", 1),
+           new JProperty("name", "화염의 파편"),
+           new JProperty("desc", "오니에서 흘러나온 파편으로 화염이 깃들어 있다.\n3개를 모아 마을로 가보자"),
+           new JProperty("image", "../Image/red_particle.png"),
+           new JProperty("count", 1));
+
+        JObject Item2 = new JObject(
+            new JProperty("index", 2),
+            new JProperty("name", "바위의 파편"),
+            new JProperty("desc", "오니에서 흘러나온 파편으로 바위가 깃들어 있다.\n3개를 모아 마을로 가보자"),
+            new JProperty("image", "../Image/stone_particle.png"),
+            new JProperty("count", 1));
+
+        JObject Item3 = new JObject(
+            new JProperty("index", 3),
+            new JProperty("name", "번개의 파편"),
+            new JProperty("desc", "오니에서 흘러나온 파편으로 번개가 깃들어 있다.\n3개를 모아 마을로 가보자"),
+            new JProperty("image", "../Image/light_particle.png"),
+            new JProperty("count", 1));
+
+        JObject Item4 = new JObject(
+            new JProperty("index", 4),
+            new JProperty("name", "복숭아 씨앗"),
+            new JProperty("desc", "복숭아에서 떨어진 씨앗으로 밝게 빛나고 있다.\n3개를 모아 마을로 가보자"),
+            new JProperty("image", "../Image/peach_particle.png"),
+            new JProperty("count", 1));
+
+        JArray jArray = new JArray();
+
+        jArray.Add(Item1);
+        jArray.Add(Item2);
+        jArray.Add(Item3);
+        jArray.Add(Item4);
+
+        JObject items = new JObject();
+        items.Add("items", jArray);
+
+        string text = Application.dataPath + "/Resources/ItemJson.json"; // 프로젝트 이름\Assets\Resources 필요
+        File.WriteAllText(text, items.ToString()); // 실제 빌드 후 Resources 폴더에 저장됨
+
+    }
+
+    /*[ContextMenu("Item_Save")]
     public void Item_Save()
     {
         // 클래스를 Json 형식으로 만들어 준다.
         var data = JsonConvert.SerializeObject(itemtable, Formatting.Indented);
       
         Debug.Log(data);
-
-        //string text_data = data.ToString();
-        //string text = Application.dataPath + "/Script/All_Script/Hyeonho-Lee/System/ItemJson.json";
-
-        //Debug.Log(text_data);
-        //File.WriteAllText(text, text_data);
-        
-
-        
-        /*foreach (var i in itemtable)
-        {
-            data = JObject.FromObject(i);
-            json_data.Add(i);
-        }
-
-        json_data2.Add("item", json_data);
-
-        string _text = json_data2.ToString();
-        string _path = Application.dataPath + "/TestJson.json";
-
-        Debug.Log(_text); */
-        //File.WriteAllText(_path, _text);
-    }
+    }*/
 }

@@ -70882,9 +70882,9 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: Attack_Sound
+    functionName: Player_Attack_1_Sound_Play
     data: 
-    objectReferenceParameter: {fileID: 8300000, guid: 2bc5c891329678e4a83cd6a4faf33fea, type: 3}
+    objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

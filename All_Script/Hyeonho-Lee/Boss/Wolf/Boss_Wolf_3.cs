@@ -1,30 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Boss_Wolf_3 : MonoBehaviour
 {
     public int amount_spawning_mobs;
     public float spawning_range;
     public float spawn_delay;
-    public float cooltime;
     public bool is_follow;
 
+    public float cooltime;
     public float real_time;
     public bool is_cool;
 
     public GameObject spawning_mobs;
+    public GameObject skill_grid;
 
     private GameObject player;
     private Vector3 player_position;
     private GameObject wolf;
+    private GameObject skill_canvas;
     private Wolf_FSM wolf_fsm;
+    private Boss_Wolf_Sound sound;
+    private Boss_Wolf_Effect effect;
 
     void Start()
     {
-        //Attack();
         wolf = GameObject.Find("Wolf_Patern");
         wolf_fsm = wolf.GetComponent<Wolf_FSM>();
+        sound = wolf.GetComponent<Boss_Wolf_Sound>();
+        effect = wolf.GetComponent<Boss_Wolf_Effect>();
+        skill_canvas = GameObject.Find("Indicators_Canvas");
+        cooltime = 75.0f;
+        real_time = 10.0f;
     }
 
     void Update()
@@ -55,8 +64,16 @@ public class Boss_Wolf_3 : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         GameObject spawn = Instantiate(spawning_mobs, Get_Random_Position(spawning_range), Quaternion.identity);
-        Destroy(spawn, 10f);
+        Destroy(spawn, 5f);
+        GameObject grid = Instantiate(skill_grid, spawn.transform.position + new Vector3(0f, 0.5f, 0f), Quaternion.identity);
+        grid.transform.SetParent(skill_canvas.transform);
+        Destroy(grid, 5f);
+        yield return new WaitForSeconds(3.0f);
+        sound.SKill_3_Sound_Play();
+        GameObject effects = Instantiate(effect.skill_3_effect, spawn.transform.position, Quaternion.identity);
+        Destroy(effects, 3f);
     }
+
 
     void Spawn_mob(int amount, GameObject mob)
     {
@@ -72,7 +89,6 @@ public class Boss_Wolf_3 : MonoBehaviour
         if (is_cool && wolf_fsm.is_attack_3) {
             player = GameObject.Find("Player");
             Spawn_mob(amount_spawning_mobs, spawning_mobs);
-
             real_time = 0;
             is_cool = false;
         }

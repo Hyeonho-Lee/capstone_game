@@ -8,45 +8,32 @@ public class Boss_Wolf : MonoBehaviour
 
     private bool is_damage;
 
-    public Material damage_mat;
-    private Material object_mat;
-
-    private Renderer renderer;
     private Boss_UI_Controller boss_ui;
-    private Boss_Wolf_1 patern_1;
-    private Boss_Wolf_2 patern_2;
-    private Boss_Wolf_3 patern_3;
+    private Animator animator;
+    private Wolf_FSM wolf_fsm;
+    private Boss_Wolf_Sound sound;
+    private PlayerData player_data;
 
     void Start()
     {
-        renderer = GameObject.Find("Wolf").GetComponent<Renderer>();
         boss_ui = GameObject.Find("System").GetComponent<Boss_UI_Controller>();
-        patern_1 = GameObject.Find("Wolf_Patern_1").GetComponent<Boss_Wolf_1>();
-        patern_2 = GameObject.Find("Wolf_Patern_2").GetComponent<Boss_Wolf_2>();
-        patern_3 = GameObject.Find("Wolf_Patern_3").GetComponent<Boss_Wolf_3>();
+        player_data = GameObject.Find("System").GetComponent<PlayerData>();
+        animator = GameObject.Find("wolf woman").GetComponent<Animator>();
+        wolf_fsm = GetComponent<Wolf_FSM>();
+        sound = GetComponent<Boss_Wolf_Sound>();
         Reset_Status();
-
-        /*for(int i = 0; i < 100; i++) 
-        {
-            StartCoroutine(Random_Patern(15f * i));
-        }*/
     }
 
     void Update()
     {
-        if (is_damage) 
-        {
-            renderer.material = damage_mat;
-        } else 
-        {
-            renderer.material = object_mat;
-        }
-
         if (wolf_health <= 0) 
         {
             boss_ui.is_boss = false;
+            player_data.playerDataTable.wolf_boss = true;
             Destroy(this.gameObject);
         }
+
+        Get_Value();
     }
 
     void OnTriggerEnter(Collider other)
@@ -59,8 +46,7 @@ public class Boss_Wolf : MonoBehaviour
 
     void Reset_Status()
     {
-        wolf_health = 100.0f;
-        object_mat = renderer.material;
+        wolf_health = 150.0f;
     }
 
     IEnumerator Is_Damage(float delay)
@@ -69,8 +55,20 @@ public class Boss_Wolf : MonoBehaviour
         {
             is_damage = true;
             wolf_health -= 1.0f;
+            sound.Hit_Sound_Play();
             yield return new WaitForSeconds(delay);
             is_damage = false;
         }
+    }
+
+    void Get_Value()
+    {
+        animator.SetBool("is_move", wolf_fsm.is_move);
+    }
+
+    public IEnumerator Animation_Delay(float delay, string name)
+    {
+        yield return new WaitForSeconds(delay);
+        animator.Play(name);
     }
 }

@@ -17,17 +17,20 @@ public class Player_Interaction : MonoBehaviour
     private bool is_effect;
     private bool is_area;
 
-    PlayerMovement movement;
-    NPC_Manager npc_manager;
-    TextMeshProUGUI textmesh;
-    Animator ui_animator;
-    SphereCollider collider;
+    private PlayerMovement movement;
+    private NPC_Manager npc_manager;
+    private PlayerSound player_sound;
+
+    private TextMeshProUGUI textmesh;
+    private Animator ui_animator;
+    private SphereCollider collider;
 
     void Start()
     {
         npc_manager = GameObject.Find("System").GetComponent<NPC_Manager>();
         player = GameObject.Find("Player");
         movement = player.GetComponent<PlayerMovement>();
+        player_sound = player.GetComponent<PlayerSound>();
         collider = GetComponent<SphereCollider>();
         transform.position = player.transform.position + new Vector3(0f, 1.2f, 0f);
         transform.SetParent(player.transform);
@@ -156,6 +159,7 @@ public class Player_Interaction : MonoBehaviour
 
     IEnumerator PickItem(GameObject item, float delay)
     {
+        player_sound.Pick_Sound_Play();
         eventList.Remove(item);
         Destroy(item.gameObject);
         movement.is_pick = true;

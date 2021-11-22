@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 5149038627369833763}
   - component: {fileID: 9189876316252196991}
   - component: {fileID: 1331079162}
+  - component: {fileID: 1319760932}
   m_Layer: 0
   m_Name: System
   m_TagString: Untagged
@@ -67,12 +68,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   world:
-  - world_name: 
-    is_world_enter: 0
-  - world_name: 
-    is_world_enter: 0
-  - world_name: 
-    is_world_enter: 0
   - world_name: 
     is_world_enter: 0
   - world_name: 
@@ -265,6 +260,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &1331079162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,3 +276,31 @@ MonoBehaviour:
   inventory_ui: {fileID: 0}
   status: {fileID: 0}
   skill_slot: {fileID: 0}
+--- !u!114 &1319760932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9189876316694512404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 412d65c9b22277045b4b73aff4be5e68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  change_image:
+  - {fileID: 21300000, guid: 5751d63d1ac37994aba6a1bf68bd77d6, type: 3}
+  - {fileID: 21300000, guid: 8d159d3ab97f2874f9565f7bdd9cbc37, type: 3}
+  - {fileID: 21300000, guid: c190e94492ef5c2499360255a769b607, type: 3}
+  test:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  health_image:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

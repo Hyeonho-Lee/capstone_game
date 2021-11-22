@@ -29,23 +29,21 @@ public class Boss_UI_Controller : MonoBehaviour
 
     void Check_Boss()
     {
-        if (world_admin.world[0].is_world_enter) 
-        {
-            if(GameObject.Find("Wolf_Patern") != null)
-            {
-                boss_wolf = GameObject.Find("Wolf_Patern").GetComponent<Boss_Wolf>();
-                is_boss = true;
-                boss_name = "È­¿°À» ÀÌ²ô´Â ´Á´ë";
-                boss_text_name.text = boss_name;
-                if (is_boss) {
-                    boss_health_bar.value = boss_wolf.wolf_health / 10;
-                } else {
-                    boss_health_bar.value = 1;
-                }
+        if (GameObject.Find("Wolf_Patern") != null) {
+            boss_wolf = GameObject.Find("Wolf_Patern").GetComponent<Boss_Wolf>();
+            is_boss = true;
+            boss_name = "È­¿°À» ÀÌ²ô´Â ´Á´ë";
+            boss_text_name.text = boss_name;
+            if (is_boss) {
+                boss_health_bar.value = boss_wolf.wolf_health / 150;
+            } else {
+                boss_health_bar.value = 1;
             }
+        } else {
+            is_boss = false;
         }
 
-        if (world_admin.world[1].is_world_enter) 
+        /*if (world_admin.world[1].is_world_enter) 
         {
             if (GameObject.Find("Bird_Patern") != null) 
             {
@@ -64,7 +62,7 @@ public class Boss_UI_Controller : MonoBehaviour
         if (world_admin.world[2].is_world_enter)
         {
             is_boss = false;
-        }
+        }*/
     }
 
     void Active_Boss_UI()

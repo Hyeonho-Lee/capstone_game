@@ -20,6 +20,17 @@ public class Inventory_Table : MonoBehaviour
     void Start()
     {
         Inventory_Reset();
+
+        FileInfo fi = new FileInfo(Application.dataPath + "/Resources/InventoryJson.json");
+
+        if (fi.Exists) {
+            //Debug.Log("파일 있음");
+            Inventory_Load();
+        } else {
+            //Debug.Log("파일 없음");
+            Inventory_Create();
+            Inventory_Load();
+        }
     }
 
     public void Inventory_Reset()
@@ -47,14 +58,14 @@ public class Inventory_Table : MonoBehaviour
             inventory_array.Add(status);
         }
 
-        string text = Application.dataPath + "/Script/All_Script/Hyeonho-Lee/System/InventoryJson.json";
+        string text = Application.dataPath + "/Resources/InventoryJson.json";
         File.WriteAllText(text, inventory_array.ToString());
     }
 
     [ContextMenu("Inventory_Load")]
     public void Inventory_Load()
     {
-        string text = Application.dataPath + "/Script/All_Script/Hyeonho-Lee/System/InventoryJson.json";
+        string text = Application.dataPath + "/Resources/InventoryJson.json";
         string text_data = File.ReadAllText(text);
 
         JArray data = JArray.Parse(text_data);
@@ -81,7 +92,7 @@ public class Inventory_Table : MonoBehaviour
             ));
         }
 
-        string text = Application.dataPath + "/Script/All_Script/Hyeonho-Lee/System/InventoryJson.json";
+        string text = Application.dataPath + "/Resources/InventoryJson.json";
         File.WriteAllText(text, inventory_array.ToString());
     }
 }

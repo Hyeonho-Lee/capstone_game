@@ -8,7 +8,7 @@ public class Change_BGM : MonoBehaviour
 
     // Inspector 영역에 표시할 배경음악 이름
     private string bgmName;
-    public AudioClip play_bgm;
+    private AudioClip play_bgm;
     
     private GameObject CamObject;
     private Camera_BGM_Controller bgm_controller;

@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerEffect : MonoBehaviour
 {
     public GameObject dash_effect;
+    public GameObject hit_effect_1;
+    public GameObject hit_effect_2;
 
     private GameObject player;
     private GameObject system;

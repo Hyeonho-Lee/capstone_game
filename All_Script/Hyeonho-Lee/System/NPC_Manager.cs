@@ -13,6 +13,7 @@ public class NPC_Manager : MonoBehaviour
 
     private Queue<string> sentences;
 
+    private PlayerData player_data;
     private PlayerMovement movement;
     private TextMeshProUGUI text_mesh;
 
@@ -37,6 +38,7 @@ public class NPC_Manager : MonoBehaviour
         }
 
         Next_Sentence();
+        Talk_Trigger(dialogue.name);
     }
 
     public void Next_Sentence()
@@ -69,6 +71,15 @@ public class NPC_Manager : MonoBehaviour
         foreach(char letter in sentence.ToCharArray()) {
             text_mesh.text += letter;
             yield return new WaitForSeconds(0.05f);
+        }
+    }
+
+    public void Talk_Trigger(string npc_name)
+    {
+        if (npc_name == "º¹¼þ¾Æ ³ª¹«") {
+            player_data = GameObject.Find("System").GetComponent<PlayerData>();
+            player_data.PlayerDataSave();
+            player_data.PlayerDataLoad();
         }
     }
 }

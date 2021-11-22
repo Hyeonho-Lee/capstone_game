@@ -24,29 +24,40 @@ public class PlayerStatus : MonoBehaviour
     void Start()
     {
         //Stat_Load();
+
+        FileInfo fi = new FileInfo(Application.dataPath + "/Resources/PlayerJson.json");
+
+        if (fi.Exists) {
+            //Debug.Log("파일 있음");
+            Stat_Load();
+        } else {
+            //Debug.Log("파일 없음");
+            Stat_Create();
+            Stat_Load();
+        }
     }
 
     [ContextMenu("Stat_Create")]
     public void Stat_Create()
     {
         JObject status = new JObject(
-            new JProperty("health", 0),
-            new JProperty("move_speed", 0),
-            new JProperty("attack_speed", 0),
-            new JProperty("attack_damage", 0),
-            new JProperty("life_count", 0),
-            new JProperty("potion_count", 0),
-            new JProperty("potion_recovery", 0)
+            new JProperty("health", 10),
+            new JProperty("move_speed", 15.0f),
+            new JProperty("attack_speed", 0.5f),
+            new JProperty("attack_damage", 1.0),
+            new JProperty("life_count", 1),
+            new JProperty("potion_count", 3),
+            new JProperty("potion_recovery", 5.0)
         );
 
-        string text = Application.dataPath + "/Script/All_Script/Hyeonho-Lee/System/PlayerJson.json";
+        string text = Application.dataPath + "/Resources/PlayerJson.json";
         File.WriteAllText(text, status.ToString());
     }
 
     [ContextMenu("Stat_Load")]
     public void Stat_Load()
     {
-        string text = Application.dataPath + "/Script/All_Script/Hyeonho-Lee/System/PlayerJson.json";
+        string text = Application.dataPath + "/Resources/PlayerJson.json";
         string text_data = File.ReadAllText(text);
 
         JObject data = JObject.Parse(text_data);
@@ -73,7 +84,7 @@ public class PlayerStatus : MonoBehaviour
             new JProperty("potion_recovery", player_stat.potion_recovery)
         );
 
-        string text = Application.dataPath + "/Script/All_Script/Hyeonho-Lee/System/PlayerJson.json";
+        string text = Application.dataPath + "/Resources/PlayerJson.json";
         File.WriteAllText(text, status.ToString());
     }
 

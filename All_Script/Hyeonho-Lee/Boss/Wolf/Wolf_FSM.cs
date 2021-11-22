@@ -15,12 +15,12 @@ public class Wolf_FSM : MonoBehaviour
 
     public State state;
 
-    public float move_speed;
-    public float target_distance;
+    private float move_speed;
+    private float target_distance;
 
-    public float cooltime;
-    public float real_time;
-    public bool is_cool;
+    private float cooltime;                 //기본공격 쿨타임
+    private float real_time;                //
+    private bool is_cool;                   //기본공격 쿨타임이 돌았으면 체크
 
     private float search_distance;
     private float combat_distance;
@@ -32,31 +32,47 @@ public class Wolf_FSM : MonoBehaviour
     public bool is_attack_3;
     public bool is_attack_lock;
 
-    public GameObject base_attack_object;
+    public GameObject base_attack_object;   //평타 나갈때 박스
+    public GameObject skill_grid;
 
-    private GameObject target;
+    private GameObject target;              //wolf 공격대상
+    private GameObject skill_canvas;
+    private Rigidbody rigidbody;
     private Boss_Move boss_move;
     private Boss_Wolf_1 patern_1;
     private Boss_Wolf_2 patern_2;
     private Boss_Wolf_3 patern_3;
+    private Boss_Wolf boss_wolf;
+    private Boss_Wolf_Effect wolf_effect;
 
     void Start()
     {
         state = State.Idle;
         target = GameObject.Find("Player");
+        skill_canvas = GameObject.Find("Indicators_Canvas");
         boss_move = GetComponent<Boss_Move>();
-        Reset_Status();
+        rigidbody = GetComponent<Rigidbody>();
+        wolf_effect = GetComponent<Boss_Wolf_Effect>();
         patern_1 = GameObject.Find("Wolf_Patern_1").GetComponent<Boss_Wolf_1>();
         patern_2 = GameObject.Find("Wolf_Patern_2").GetComponent<Boss_Wolf_2>();
         patern_3 = GameObject.Find("Wolf_Patern_3").GetComponent<Boss_Wolf_3>();
+        boss_wolf = GameObject.Find("Wolf_Patern").GetComponent<Boss_Wolf>();
+        Reset_Status();
     }
 
     void Update()
     {
+        skill_canvas.transform.position = this.transform.position;
         target_distance = Vector3.Distance(transform.position, target.transform.position);
-        boss_move.Rotate(target);
 
-        if (!is_cool) {
+        if (is_attack_lock) {
+            rigidbody.mass = 1;             //질량
+        } else {
+            rigidbody.mass = 100;           //안밀리게 하기 위함. 
+            boss_move.Rotate(target);
+        }
+
+        if (!is_cool) {                     //평타 is cool
             real_time += Time.deltaTime;
 
             if (real_time >= cooltime) {
@@ -67,9 +83,6 @@ public class Wolf_FSM : MonoBehaviour
         switch (state) {
             case State.Idle:
                 Update_Idle();
-                break;
-            case State.Move:
-                Update_Move();
                 break;
             case State.Combat:
                 Update_Combat();
@@ -83,15 +96,28 @@ public class Wolf_FSM : MonoBehaviour
         }
     }
 
+    void FixedUpdate()
+    {
+        switch (state) {
+            case State.Move:
+                Update_Move();
+                break;
+        }
+    }
+
     void Reset_Status()
     {
         search_distance = 23f;
         combat_distance = 6f;
-        move_speed = 12f;
+        move_speed = 12.0f;
+        cooltime = 6.0f;
+        real_time = 4.0f;
     }
 
     void Update_Idle()
     {
+        is_move = false;
+
         if (search_distance > target_distance) {
             state = State.Move;
         }
@@ -103,6 +129,11 @@ public class Wolf_FSM : MonoBehaviour
 
     void Update_Move()
     {
+        if (!is_attack_lock) {
+            boss_move.Move(target, move_speed);
+            is_move = true;
+        }
+
         if (search_distance <= target_distance) {
             state = State.Idle;
         }
@@ -114,21 +145,25 @@ public class Wolf_FSM : MonoBehaviour
 
     void Update_Combat()
     {
-        if (combat_distance <= target_distance) {
+        is_move = false;
+
+        if (combat_distance <= target_distance && !is_attack_lock) {
             state = State.Move;
         }
 
-        if (is_cool && !is_attack_lock && !patern_1.is_cool)  {
+        if (is_cool) {
             is_attack_0 = true;
-            state = State.Skill;
-        } 
-        
-        if (patern_1.is_cool && !is_attack_lock && is_cool ||
-            patern_1.is_cool && !is_attack_lock && !is_cool) {
-            is_attack_1 = true;
             state = State.Skill;
         }
 
+        if (patern_1.is_cool) {
+            is_attack_1 = true;
+            state = State.Skill;
+        }
+        if (patern_2.is_cool) {
+            is_attack_2 = true;
+            state = State.Skill;
+        }
         if (patern_3.is_cool) {
             is_attack_3 = true;
             state = State.Skill;
@@ -137,51 +172,43 @@ public class Wolf_FSM : MonoBehaviour
 
     void Update_Skill()
     {
-        if (search_distance <= target_distance) {
+        if (search_distance <= target_distance && !is_attack_lock) {
             state = State.Idle;
         }
 
-        if (search_distance + 5.0f > target_distance) {
+        if (search_distance + 5.0f > target_distance && !is_attack_lock) {
             state = State.Move;
         }
 
-        if (combat_distance > target_distance) {
-            state = State.Combat;
-        }
-
-        if (is_attack_0) {
+        if (is_attack_0 && !is_attack_lock) {
             Attack_Patern_0();
-            StartCoroutine(attack_lock(3.5f));
             is_attack_0 = false;
-        }
-
-        if (is_attack_1) {
-            Attack_Patern_1();
-            StartCoroutine(attack_lock(8.5f));
-            is_attack_1 = false;
-        }
-
-        if (is_attack_2) {
-            Attack_Patern_2();
-            StartCoroutine(attack_lock(15.5f));
-            is_attack_2 = false;
-        }
-
-        if (is_attack_3) {
+            StartCoroutine(attack_lock(3.5f));
+        }else if (is_attack_3 && !is_attack_lock) {
             Attack_Patern_3();
-            StartCoroutine(attack_lock(5.5f));
             is_attack_3 = false;
+            StartCoroutine(attack_lock(5.5f));
+        } else if (is_attack_1 && !is_attack_lock) {
+            Attack_Patern_1();
+            is_attack_1 = false;
+            StartCoroutine(attack_lock(8.5f));
+        } else if (is_attack_2 && !is_attack_lock) {
+            Attack_Patern_2();
+            is_attack_2 = false;
+            StartCoroutine(attack_lock(17.0f));
         }
+
     }
 
     void Update_Out()
     {
-        if (search_distance  >= target_distance) {
+        if (search_distance >= target_distance) {
             state = State.Idle;
         }
 
-        if (patern_2.is_cool && !is_attack_lock && !patern_1.is_cool ||
-            patern_2.is_cool && !is_attack_lock && patern_1.is_cool) {
+        if (patern_2.is_cool && !is_attack_lock && !patern_1.is_cool && !is_cool ||
+            patern_2.is_cool && !is_attack_lock && !patern_1.is_cool && is_cool ||
+            patern_2.is_cool && !is_attack_lock && patern_1.is_cool && is_cool) {
             is_attack_2 = true;
             state = State.Skill;
         }
@@ -197,21 +224,34 @@ public class Wolf_FSM : MonoBehaviour
         Instantiate(base_attack_object, this.transform);
         real_time = 0;
         is_cool = false;
+        GameObject grid = Instantiate(skill_grid, this.transform.position, this.transform.rotation);
+        grid.transform.SetParent(skill_canvas.transform);
+        Destroy(grid, 3f);
+        StartCoroutine(boss_wolf.Animation_Delay(2.0f, "base_attack"));
+        StartCoroutine(base_effect(2.0f));
     }
 
     void Attack_Patern_1()
     {
         patern_1.Attack();
+        StartCoroutine(boss_wolf.Animation_Delay(2.0f, "skill_1"));
+        StartCoroutine(boss_wolf.Animation_Delay(4.0f, "skill_1"));
+        StartCoroutine(boss_wolf.Animation_Delay(6.0f, "skill_1"));
     }
 
     void Attack_Patern_2()
     {
         patern_2.Attack();
+        StartCoroutine(boss_wolf.Animation_Delay(3.0f, "skill_2-1"));
+        StartCoroutine(boss_wolf.Animation_Delay(8.0f, "skill_2-2"));
+        StartCoroutine(boss_wolf.Animation_Delay(11.0f, "skill_2-3"));
+        StartCoroutine(boss_wolf.Animation_Delay(13.0f, "skill_2-4"));
     }
 
     void Attack_Patern_3()
     {
         patern_3.Attack();
+        StartCoroutine(boss_wolf.Animation_Delay(0.5f, "skill_3"));
     }
 
     IEnumerator attack_lock(float delay)
@@ -219,5 +259,13 @@ public class Wolf_FSM : MonoBehaviour
         is_attack_lock = true;
         yield return new WaitForSeconds(delay);
         is_attack_lock = false;
+    }
+
+    IEnumerator base_effect(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        GameObject effect = Instantiate(wolf_effect.skill_0_effect, this.transform.position + new Vector3(0f, 2f, 0f), this.transform.rotation * Quaternion.Euler(90f, 0f, 0f));
+        effect.transform.parent = this.transform;
+        Destroy(effect, 1f);
     }
 }

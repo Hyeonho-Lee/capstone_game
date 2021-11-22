@@ -52,6 +52,6 @@ public class Clck_Event : MonoBehaviour, IPointerDownHandler, IPointerEnterHandl
     {
         image_faidout.Faid_Out();
         yield return new WaitForSeconds(8f);
-        SceneManager.LoadScene("MainPlayRoom");
+        SceneManager.LoadScene("Load");
     }
 }
