@@ -1064,8 +1064,9 @@ MonoBehaviour:
     name: "\uBCF5\uC22D\uC544 \uB098\uBB34"
     image_index: 8
     sentences:
-    - "\uC800\uC7A5\uACFC \uD790\uC744 \uD558\uB294\uC911"
-    - "\uB05D"
+    - "\uBCF5\uC22D\uC544 \uB098\uBB34\uC758 \uCD95\uBCF5\uC744 \uBC1B\uC544 \uCC44\uB825,
+      \uBCF5\uC22D\uC544\uB97C \uD68C\uBCF5\uD558\uC600\uC2B5\uB2C8\uB2E4."
+    - "\uB370\uC774\uD130\uAC00 \uC800\uC7A5\uC774 \uB418\uC5C8\uC2B5\uB2C8\uB2E4."
 --- !u!1001 &2085780371
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -9,10 +9,12 @@ public class Loading_Box : MonoBehaviour
     public string trigger_scene;
 
     private World_Admin world_admin;
+    private PlayerData player_data;
 
     void Start()
     {
         world_admin = GameObject.Find("System").GetComponent<World_Admin>();
+        player_data = GameObject.Find("System").GetComponent<PlayerData>();
     }
 
     void OnTriggerExit(Collider other)
@@ -53,10 +55,21 @@ public class Loading_Box : MonoBehaviour
             Scene current_scene = SceneManager.GetSceneByName(trigger_scene);
             SceneManager.MoveGameObjectToScene(GameObject.FindGameObjectWithTag("Get_Next"), current_scene);
 
-            AsyncOperation unload = SceneManager.UnloadSceneAsync(scene_name);
+            if (player_data.playerDataTable.town && !player_data.playerDataTable.first_scene || player_data.playerDataTable.stage_2 && !player_data.playerDataTable.first_scene) {
+                player_data.playerDataTable.first_scene = true;
 
-            while (!unload.isDone) {
-                yield return null;
+                AsyncOperation unload = SceneManager.UnloadSceneAsync(scene_name);
+                AsyncOperation unloads = SceneManager.UnloadSceneAsync("MainPlayRoom");
+
+                while (!unload.isDone && !unloads.isDone) {
+                    yield return null;
+                }
+            }else {
+                AsyncOperation unload = SceneManager.UnloadSceneAsync(scene_name);
+
+                while (!unload.isDone) {
+                    yield return null;
+                }
             }
         }
     }

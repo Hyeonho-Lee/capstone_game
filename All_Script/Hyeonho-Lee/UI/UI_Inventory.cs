@@ -8,7 +8,8 @@ public class UI_Inventory : MonoBehaviour
     public GameObject status;
     public GameObject skill_slot;
 
-    PlayerMovement movement;
+    private PlayerMovement movement;
+    private Invenyoty_Change inventory_change;
 
     void Start()
     {
@@ -30,6 +31,8 @@ public class UI_Inventory : MonoBehaviour
     {
         inventory_ui.SetActive(true);
         movement.is_inventory = true;
+        inventory_change = GameObject.Find("all_slot").GetComponent<Invenyoty_Change>();
+        inventory_change.Change_Update();
     }
 
     public void Inventory_Exit()

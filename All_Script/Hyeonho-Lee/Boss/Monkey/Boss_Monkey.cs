@@ -4,22 +4,61 @@ using UnityEngine;
 
 public class Boss_Monkey : MonoBehaviour
 {
-    private Boss_Monkey_1 patern_1;
-    private Boss_Monkey_2 patern_2;
+    public float monkey_health;
+
+    private bool is_damage;
+
+    private Boss_UI_Controller boss_ui;
+    private Animator animator;
 
     void Start()
     {
-        patern_1 = GameObject.Find("Monkey_Patern_1").GetComponent<Boss_Monkey_1>();
-        patern_2 = GameObject.Find("Monkey_Patern_2").GetComponent<Boss_Monkey_2>();
+        boss_ui = GameObject.Find("System").GetComponent<Boss_UI_Controller>();
+        Reset_Status();
     }
 
-    public void Patern_1()
+    void Update()
     {
-        patern_1.Attack();
+        if (monkey_health <= 0) {
+            boss_ui.is_boss = false;
+            //player_data.playerDataTable.wolf_boss = true;
+            Destroy(this.gameObject);
+        }
+
+        Get_Value();
     }
 
-    public void Patern_2()
+    void OnTriggerEnter(Collider other)
     {
-        patern_2.Attack();
+        if (other.tag == "Player_Attack") {
+            StartCoroutine(Is_Damage(0.5f));
+        }
+    }
+
+    void Reset_Status()
+    {
+        monkey_health = 100.0f;
+    }
+
+    IEnumerator Is_Damage(float delay)
+    {
+        if (!is_damage) {
+            is_damage = true;
+            monkey_health -= 1.0f;
+            //sound.Hit_Sound_Play();
+            yield return new WaitForSeconds(delay);
+            is_damage = false;
+        }
+    }
+
+    void Get_Value()
+    {
+        //animator.SetBool("is_move", wolf_fsm.is_move);
+    }
+
+    public IEnumerator Animation_Delay(float delay, string name)
+    {
+        yield return new WaitForSeconds(delay);
+        animator.Play(name);
     }
 }

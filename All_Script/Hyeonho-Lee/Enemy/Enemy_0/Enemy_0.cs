@@ -13,6 +13,9 @@ public class Enemy_0 : MonoBehaviour
     public float distance;
     public float font_size;
 
+    public int item_index;
+    public float item_percent;
+
     private bool is_damage;
     private bool is_die;
 
@@ -20,8 +23,10 @@ public class Enemy_0 : MonoBehaviour
 
     public AudioClip enemy_hit_sound;
     private GameObject player;
+    private GameObject system;
     private Slider health_ui;
 
+    private Item_Table item_table;
     private TextMeshPro textmeshs;
     private CapsuleCollider collider;
     private AudioSource audio;
@@ -29,6 +34,8 @@ public class Enemy_0 : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
+        system = GameObject.Find("System");
+        item_table = system.GetComponent<Item_Table>();
         collider = GetComponent<CapsuleCollider>();
         audio = GetComponent<AudioSource>();
         Reset_Status();
@@ -111,10 +118,24 @@ public class Enemy_0 : MonoBehaviour
     {
         is_die = true;
         value = 0;
-        GameObject die_effects = Instantiate(die_effect);
-        die_effects.transform.position = this.transform.position;
-        Destroy(die_effects, 2.0f);
+        Drop_Item(item_index, item_percent);
+        if (die_effect != null) {
+            GameObject die_effects = Instantiate(die_effect);
+            die_effects.transform.position = this.transform.position;
+            Destroy(die_effects, 2.0f);
+        }
         Destroy(this.gameObject, 0.2f);
         yield return null;
+    }
+
+    void Drop_Item(int index, float percent)
+    {
+        float random_value = Random.Range(0.0f, 1.0f);
+        if (random_value <= percent && percent != 0.0f) {
+            GameObject items = Instantiate(item_table.item_prefab[index]);
+            items.transform.position = this.transform.position;
+            //Debug.Log(item_table.itemtable[index].name);
+            //Debug.Log("µå¶ø!");
+        }
     }
 }

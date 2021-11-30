@@ -44,6 +44,7 @@ public class Wolf_FSM : MonoBehaviour
     private Boss_Wolf_3 patern_3;
     private Boss_Wolf boss_wolf;
     private Boss_Wolf_Effect wolf_effect;
+    private Boss_Wolf_Sound sound;
 
     void Start()
     {
@@ -53,6 +54,7 @@ public class Wolf_FSM : MonoBehaviour
         boss_move = GetComponent<Boss_Move>();
         rigidbody = GetComponent<Rigidbody>();
         wolf_effect = GetComponent<Boss_Wolf_Effect>();
+        sound = GetComponent<Boss_Wolf_Sound>();
         patern_1 = GameObject.Find("Wolf_Patern_1").GetComponent<Boss_Wolf_1>();
         patern_2 = GameObject.Find("Wolf_Patern_2").GetComponent<Boss_Wolf_2>();
         patern_3 = GameObject.Find("Wolf_Patern_3").GetComponent<Boss_Wolf_3>();
@@ -74,7 +76,6 @@ public class Wolf_FSM : MonoBehaviour
 
         if (!is_cool) {                     //ÆòÅ¸ is cool
             real_time += Time.deltaTime;
-
             if (real_time >= cooltime) {
                 is_cool = true;
             }
@@ -229,6 +230,7 @@ public class Wolf_FSM : MonoBehaviour
         Destroy(grid, 3f);
         StartCoroutine(boss_wolf.Animation_Delay(2.0f, "base_attack"));
         StartCoroutine(base_effect(2.0f));
+        StartCoroutine(sound_delay(2.0f));
     }
 
     void Attack_Patern_1()
@@ -267,5 +269,11 @@ public class Wolf_FSM : MonoBehaviour
         GameObject effect = Instantiate(wolf_effect.skill_0_effect, this.transform.position + new Vector3(0f, 2f, 0f), this.transform.rotation * Quaternion.Euler(90f, 0f, 0f));
         effect.transform.parent = this.transform;
         Destroy(effect, 1f);
+    }
+
+    IEnumerator sound_delay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        sound.SKill_0_Sound_Play();
     }
 }

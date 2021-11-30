@@ -45,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject attack_object_2;
     public GameObject attack_object_3;
     public GameObject skill_object_3;
+    public GameObject skill_object_4;
     public Slider stamina_bar;
     public Material damage_mat;
     private Material object_mat;
@@ -62,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerSound player_sound;
     private World_Admin world_admin;
     private Loading_Scene loading_scene;
+    private NPC_Manager npc_manager;
 
     private Renderer renderer;
     private Renderer renderer_1;
@@ -100,6 +102,7 @@ public class PlayerMovement : MonoBehaviour
         player_status.Stat_Load();
         Reset_Status();
         health_controller.Check_Health(health);
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Boss"));
     }
 
     void Update()
@@ -170,6 +173,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Application.Quit();
+        }
+
+        if (is_talk && Input.GetKeyDown(KeyCode.Space)) {
+            npc_manager = GameObject.Find("System").GetComponent<NPC_Manager>();
+            npc_manager.Next_Sentence();
         }
 
         if (!is_talk && Input.GetKeyDown(KeyCode.Tab) && !is_die) {

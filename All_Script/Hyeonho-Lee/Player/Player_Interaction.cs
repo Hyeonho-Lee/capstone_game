@@ -62,7 +62,7 @@ public class Player_Interaction : MonoBehaviour
                 if (item_distance.tag == "NPC" || item_distance.tag == "Shop") {
                     item_distance = FindPickableItemClosestToPlayer();
                     NPC_Trigger trigger = item_distance.GetComponent<NPC_Trigger>();
-                    trigger.Dialogue_Trigger(); trigger.Dialogue_Trigger();
+                    trigger.Dialogue_Trigger();
                     //Debug.Log("NPC ¥Î»≠¡ﬂ");
                 }
             }
@@ -162,6 +162,10 @@ public class Player_Interaction : MonoBehaviour
         player_sound.Pick_Sound_Play();
         eventList.Remove(item);
         Destroy(item.gameObject);
+
+        Check_Index check_index = item.GetComponent<Check_Index>();
+        check_index.Drop_Inventory();
+
         movement.is_pick = true;
         movement.lock_attack = true;
         movement.lock_dash = true;

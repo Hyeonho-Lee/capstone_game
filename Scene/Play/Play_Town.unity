@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.8261323, g: 0.8495278, b: 0.8454057, a: 1}
+  m_IndirectSpecularColor: {r: 0.649072, g: 0.6912048, b: 0.683669, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -372,6 +372,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 144753685}
     m_Modifications:
+    - target: {fileID: 1125451660, guid: d2d8faf412607224c83ce3dc68e5e6ef, type: 3}
+      propertyPath: dialogue.sentences.Array.data[0]
+      value: "\uBCF5\uC22D\uC544 \uB098\uBB34\uC758 \uCD95\uBCF5\uC744 \uBC1B\uC544
+        \uCC44\uB825, \uBCF5\uC22D\uC544\uB97C \uD68C\uBCF5\uD558\uC600\uC2B5\uB2C8\uB2E4."
+      objectReference: {fileID: 0}
+    - target: {fileID: 1125451660, guid: d2d8faf412607224c83ce3dc68e5e6ef, type: 3}
+      propertyPath: dialogue.sentences.Array.data[1]
+      value: "\uB370\uC774\uD130\uAC00 \uC800\uC7A5\uC774 \uB418\uC5C8\uC2B5\uB2C8\uB2E4."
+      objectReference: {fileID: 0}
     - target: {fileID: 1251663925327270184, guid: d2d8faf412607224c83ce3dc68e5e6ef, type: 3}
       propertyPath: m_Name
       value: trees
@@ -611,6 +620,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1290774409}
     m_Modifications:
+    - target: {fileID: 344220856030034668, guid: a0ce38ededb71e34facabc4200b2c0a9, type: 3}
+      propertyPath: dialogue.image_index
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 344220856030034668, guid: a0ce38ededb71e34facabc4200b2c0a9, type: 3}
+      propertyPath: dialogue.sentences.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 344220856030034668, guid: a0ce38ededb71e34facabc4200b2c0a9, type: 3}
+      propertyPath: dialogue.sentences.Array.data[0]
+      value: "\uBAA8\uBAA8\uD0C0\uB85C\uC57C! \uB9C8\uC744\uC744 \uBC97\uC5B4\uB098\uBA74
+        \uC800\uC8FC\uBC1B\uC740 \uC218\uD638\uC2E0\uB4E4\uC774 \uC788\uC5B4"
+      objectReference: {fileID: 0}
+    - target: {fileID: 344220856030034668, guid: a0ce38ededb71e34facabc4200b2c0a9, type: 3}
+      propertyPath: dialogue.sentences.Array.data[1]
+      value: "\uADF8\uB140\uC11D\uB4E4\uC740 \uAC15\uB825\uD558\uB2C8\uAE4C \uC900\uBE44\uB97C
+        \uCCA0\uC800\uD788 \uD558\uB294\uAC83\uC774 \uC88B\uC744\uAEBC\uC57C"
+      objectReference: {fileID: 0}
+    - target: {fileID: 344220856030034668, guid: a0ce38ededb71e34facabc4200b2c0a9, type: 3}
+      propertyPath: dialogue.sentences.Array.data[2]
+      value: "\uC774 \uB9C8\uC744 \uC704\uC5D0 \uC815\uB839\uB4E4\uC744 \uC7A1\uC73C\uBA74
+        \uC5BB\uB294 \uD30C\uD3B8\uB4E4\uC744 \uBAA8\uC544 \uBAA8\uB8E8\uC5D0\uAC8C
+        \uAC00\uC838\uAC00\uBA74 \uB354\uC6B1 \uAC15\uB825\uD55C \uD798\uC744 \uC5BB\uC744\uC218
+        \uC788\uC744\uAEBC\uC57C!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 344220856030034668, guid: a0ce38ededb71e34facabc4200b2c0a9, type: 3}
+      propertyPath: dialogue.sentences.Array.data[3]
+      value: "\uC218\uD638\uC2E0\uC744 \uBB34\uCC0C\uB974\uACE0 \uB9C8\uC744\uC744
+        \uAD6C\uD574\uC918!!!"
+      objectReference: {fileID: 0}
     - target: {fileID: 5814512461377240645, guid: a0ce38ededb71e34facabc4200b2c0a9, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -725,6 +764,16 @@ PrefabInstance:
     - target: {fileID: 3218394824044319547, guid: 1666f889b97a08748bd73517b3cc2bc4, type: 3}
       propertyPath: m_Name
       value: Shop_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7154985484874337571, guid: 1666f889b97a08748bd73517b3cc2bc4, type: 3}
+      propertyPath: dialogue.sentences.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7154985484874337571, guid: 1666f889b97a08748bd73517b3cc2bc4, type: 3}
+      propertyPath: dialogue.sentences.Array.data[0]
+      value: "\uB369\uADF8\uB7EC\uB2C8 \uB0A8\uACA8\uC9C4 \uD5C8\uB984\uD55C \uBAA8\uB8E8\uC774\uB2E4.\n\uD30C\uD3B8\uC744
+        3\uAC1C \uAC00\uC838\uC624\uBA74 \uC7A5\uBE44\uB97C \uAC15\uD654\uD560\uC218
+        \uC788\uC5B4 \uBCF4\uC778\uB2E4."
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1666f889b97a08748bd73517b3cc2bc4, type: 3}

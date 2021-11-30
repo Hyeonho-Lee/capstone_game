@@ -791,6 +791,8 @@ MonoBehaviour:
   start_health: 10
   distance: 0
   font_size: 0
+  item_index: 1
+  item_percent: 0.2
   die_effect: {fileID: 5041242995588837717, guid: 79db27327461c944495d61d9d130e12e, type: 3}
   enemy_hit_sound: {fileID: 8300000, guid: 58b0984056c92014da170680de945d2d, type: 3}
 --- !u!114 &5503017548751226140

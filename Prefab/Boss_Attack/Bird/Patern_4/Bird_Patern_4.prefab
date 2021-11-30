@@ -43,6 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6be475de07486942bc0c520a3af8f09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move_speed: 40
+  move_speed: 15
   spawn_time: 0
+  real_time: 0
+  cooltime: 0
+  is_cool: 0
   attack_prefab: {fileID: 8324177147769826467, guid: a81491a2e32ef4b4eb778967dcb97122, type: 3}

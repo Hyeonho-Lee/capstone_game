@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: 9189876316252196991}
   - component: {fileID: 1331079162}
   - component: {fileID: 1319760932}
+  - component: {fileID: 1317068710}
+  - component: {fileID: 1317068717}
   m_Layer: 0
   m_Name: System
   m_TagString: Untagged
@@ -86,6 +88,13 @@ MonoBehaviour:
     is_world_enter: 0
   - world_name: 
     is_world_enter: 0
+  - world_name: 
+    is_world_enter: 0
+  scene_name: 
+  dialogue:
+    name: 
+    image_index: 0
+    sentences: []
 --- !u!114 &1451153646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,40 +102,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9189876316694512404}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab6c9cfd39f52cd4e956c82bae4feacc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemtable:
-  - index: 0
-    name: "\uD654\uC5FC\uC758 \uD30C\uD3B8"
-    desc: "\uC624\uB2C8\uC5D0\uC11C \uD758\uB7EC\uB098\uC628 \uD30C\uD3B8\uC73C\uB85C
-      \uD654\uC5FC\uC774 \uAE43\uB4E4\uC5B4 \uC788\uB2E4.\n3\uAC1C\uB97C \uBAA8\uC544
-      \uB9C8\uC744\uB85C \uAC00\uBCF4\uC790"
-    image: ../Image/red_particle.png
-    count: 1
-  - index: 0
-    name: "\uBC14\uC704\uC758 \uD30C\uD3B8"
-    desc: "\uC624\uB2C8\uC5D0\uC11C \uD758\uB7EC\uB098\uC628 \uD30C\uD3B8\uC73C\uB85C
-      \uBC14\uC704\uAC00 \uAE43\uB4E4\uC5B4 \uC788\uB2E4.\n3\uAC1C\uB97C \uBAA8\uC544
-      \uB9C8\uC744\uB85C \uAC00\uBCF4\uC790"
-    image: ../Image/stone_particle.png
-    count: 1
-  - index: 0
-    name: "\uBC88\uAC1C\uC758 \uD30C\uD3B8"
-    desc: "\uC624\uB2C8\uC5D0\uC11C \uD758\uB7EC\uB098\uC628 \uD30C\uD3B8\uC73C\uB85C
-      \uBC88\uAC1C\uAC00 \uAE43\uB4E4\uC5B4 \uC788\uB2E4.\n3\uAC1C\uB97C \uBAA8\uC544
-      \uB9C8\uC744\uB85C \uAC00\uBCF4\uC790"
-    image: ../Image/light_particle.png
-    count: 1
-  - index: 0
-    name: "\uBCF5\uC22D\uC544 \uC528\uC557"
-    desc: "\uBCF5\uC22D\uC544\uC5D0\uC11C \uB5A8\uC5B4\uC9C4 \uC528\uC557\uC73C\uB85C
-      \uBC1D\uAC8C \uBE5B\uB098\uACE0 \uC788\uB2E4.\n3\uAC1C\uB97C \uBAA8\uC544 \uB9C8\uC744\uB85C
-      \uAC00\uBCF4\uC790."
-    image: ../Image/peach_particle.png
-    count: 1
+  itemtable: []
+  item_prefab:
+  - {fileID: 749643042862588784, guid: 1b91e6b120ab69e4b94ac451fc4335c7, type: 3}
+  - {fileID: 2612593055472000400, guid: 60967a689a1613d4bb2c18627e42a7e9, type: 3}
+  - {fileID: 5878226338379120820, guid: eb8409ec1d6436147a6577b67a2fafa7, type: 3}
+  - {fileID: 5878226338379120820, guid: eb8409ec1d6436147a6577b67a2fafa7, type: 3}
 --- !u!114 &1451153647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,19 +120,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9189876316694512404}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 52e5cd40be665724e8ed28b7f42667f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player_stat:
-    health: 10
-    move_speed: 15
-    attack_speed: 0.5
-    attack_damage: 1
-    life_count: 1
-    potion_count: 3
-    potion_recovery: 10
+    health: 0
+    move_speed: 0
+    attack_speed: 0
+    attack_damage: 0
+    life_count: 0
+    potion_count: 0
+    potion_recovery: 0
 --- !u!114 &1451153649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,21 +140,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9189876316694512404}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8edf040de71a58340b024e273cb58bc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   inventory:
   - inv_index: 0
-    item_index: 50
-    item_count: 3
+    item_index: 1
+    item_count: 5
   - inv_index: 1
-    item_index: 23
-    item_count: 1
+    item_index: 2
+    item_count: 2
   - inv_index: 2
-    item_index: 67
-    item_count: 2000
+    item_index: 0
+    item_count: 0
   - inv_index: 3
     item_index: 0
     item_count: 0
@@ -261,6 +247,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &1331079162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,3 +295,50 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &1317068710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9189876316694512404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2af6c96fb7e335a47a7fb85635e48829, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerDataTable:
+    bird_boss: 0
+    wolf_boss: 0
+    monkey_boss: 0
+    last_boss: 0
+    town: 0
+    stage_2: 0
+    is_stone_1: 0
+    is_stone_2: 0
+    is_stone_3: 0
+    tutorial_talk: 0
+    town_talk: 0
+    bird_boss_talk: 0
+    wolf_boss_talk: 0
+    monkey_boss_talk: 0
+    last_boss_talk: 0
+    first_scene: 0
+    player_position_x: 0
+    player_position_z: 0
+--- !u!114 &1317068717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9189876316694512404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb1825ff4e69ae49a883abfa96255ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    name: 
+    image_index: 0
+    sentences: []

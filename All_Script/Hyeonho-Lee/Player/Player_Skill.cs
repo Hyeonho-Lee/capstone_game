@@ -70,8 +70,8 @@ public class Player_Skill : MonoBehaviour
         skill_1_realtime = 30.0f;
         skill_2_time = 10.0f;
         skill_2_realtime = 10.0f;
-        skill_3_time = 45.0f;
-        skill_3_realtime = 45.0f;
+        skill_3_time = 15.0f;
+        skill_3_realtime = 15.0f;
     }
 
     void Update()
@@ -110,7 +110,7 @@ public class Player_Skill : MonoBehaviour
         }
 
         if (!ready_skill_3) {
-            if (skill_3_realtime <= skill_1_time) {
+            if (skill_3_realtime <= skill_3_time) {
                 skill_3_realtime += Time.deltaTime;
             } else {
                 ready_skill_3 = true;
@@ -184,7 +184,7 @@ public class Player_Skill : MonoBehaviour
             ready_skill_2 = false;
             if (banner.transform.GetChild(1).name == "Change_Image") {
                 Image image = banner.transform.GetChild(1).gameObject.GetComponent<Image>();
-                image.sprite = skill_3;
+                image.sprite = skill_4;
             }
             if (banner.transform.GetChild(4).name == "Change_Text") {
                 TextMeshProUGUI text = banner.transform.GetChild(4).gameObject.GetComponent<TextMeshProUGUI>();
@@ -195,7 +195,7 @@ public class Player_Skill : MonoBehaviour
             player_movement.is_skill = true;
             player_movement.skill_object_3.SetActive(true);
             dash_vector = new Vector3(transform.forward.x, 0, transform.forward.z);
-            rigidbody.AddForce(dash_vector * 500f, ForceMode.Impulse);
+            //rigidbody.AddForce(dash_vector * 500f, ForceMode.Impulse);
             yield return new WaitForSeconds(1.0f);
             player_movement.is_skill = false;
             player_movement.skill_object_3.SetActive(false);
@@ -204,24 +204,27 @@ public class Player_Skill : MonoBehaviour
 
     public IEnumerator Skill_4()
     {
-        if (ready_skill_3) {
-            Debug.Log("4번 스킬: 광역기");
+        if (!player_movement.is_skill && ready_skill_3) {
             skill_3_realtime = 0f;
             ready_skill_3 = false;
-            StartCoroutine(Move_Lock(1.2f));
+            StartCoroutine(Move_Lock(0.8f));
             skill_animator.Play("skill_1");
             if (banner.transform.GetChild(1).name == "Change_Image") {
                 Image image = banner.transform.GetChild(1).gameObject.GetComponent<Image>();
-                image.sprite = skill_4;
+                image.sprite = skill_3;
             }
             if (banner.transform.GetChild(4).name == "Change_Text") {
                 TextMeshProUGUI text = banner.transform.GetChild(4).gameObject.GetComponent<TextMeshProUGUI>();
                 text.text = "스킬 발동!";
             }
             player_sound.SKill_4_Sound_Play();
+            animator.Play("skill_1");
+            player_movement.is_skill = true;
+            player_movement.skill_object_4.SetActive(true);
+            yield return new WaitForSeconds(1.0f);
+            player_movement.is_skill = false;
+            player_movement.skill_object_4.SetActive(false);
         }
-
-        yield return null;
     }
 
     IEnumerator Move_Lock(float delay)

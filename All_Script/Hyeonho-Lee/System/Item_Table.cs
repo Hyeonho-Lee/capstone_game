@@ -19,6 +19,8 @@ public class Item_Table : MonoBehaviour
 {
     public List<Item> itemtable = new List<Item>();
 
+    public List<GameObject> item_prefab = new List<GameObject>();
+
     void Start()
     {
         //Item_Load();

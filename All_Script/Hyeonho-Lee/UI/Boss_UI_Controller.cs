@@ -15,6 +15,7 @@ public class Boss_UI_Controller : MonoBehaviour
     private World_Admin world_admin;
     private Boss_Wolf boss_wolf;
     private Boss_Bird boss_bird;
+    private Boss_Monkey boss_monkey;
 
     void Start()
     {
@@ -39,30 +40,29 @@ public class Boss_UI_Controller : MonoBehaviour
             } else {
                 boss_health_bar.value = 1;
             }
+        } else if (GameObject.Find("Bird_Patern") != null) {
+            boss_bird = GameObject.Find("Bird_Patern").GetComponent<Boss_Bird>();
+            is_boss = true;
+            boss_name = "날카로운 번개를 두른 학";
+            boss_text_name.text = boss_name;
+            if (is_boss) {
+                boss_health_bar.value = boss_bird.bird_health / 100;
+            } else {
+                boss_health_bar.value = 1;
+            }
+        } else if (GameObject.Find("Monkey_Patern") != null) {
+            boss_monkey = GameObject.Find("Monkey_Patern").GetComponent<Boss_Monkey>();
+            is_boss = true;
+            boss_name = "돌로 몸을 둘러싼 원숭이";
+            boss_text_name.text = boss_name;
+            if (is_boss) {
+                boss_health_bar.value = boss_monkey.monkey_health / 100;
+            } else {
+                boss_health_bar.value = 1;
+            }
         } else {
             is_boss = false;
         }
-
-        /*if (world_admin.world[1].is_world_enter) 
-        {
-            if (GameObject.Find("Bird_Patern") != null) 
-            {
-                boss_bird = GameObject.Find("Bird_Patern").GetComponent<Boss_Bird>();
-                is_boss = true;
-                boss_name = "날카로운 번개를 두른 학";
-                boss_text_name.text = boss_name;
-                if (is_boss) {
-                    boss_health_bar.value = boss_bird.bird_health / 10;
-                }else {
-                    boss_health_bar.value = 1;
-                }
-            }
-        }
-
-        if (world_admin.world[2].is_world_enter)
-        {
-            is_boss = false;
-        }*/
     }
 
     void Active_Boss_UI()

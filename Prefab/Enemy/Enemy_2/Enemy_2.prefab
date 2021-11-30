@@ -221,11 +221,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65c9acfa59c77a41a35712c16fee3db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy_name: "\uBC88\uC758 \uC815\uB839"
+  enemy_name: "\uBC88\uAC1C\uC758 \uC815\uB839"
   enemy_health: 10
   start_health: 10
   distance: 0
   font_size: 0
+  item_index: 3
+  item_percent: 0.2
   die_effect: {fileID: 5041242995588837717, guid: 79db27327461c944495d61d9d130e12e, type: 3}
   enemy_hit_sound: {fileID: 8300000, guid: 58b0984056c92014da170680de945d2d, type: 3}
 --- !u!114 &7133296844177061646
