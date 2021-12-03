@@ -718,6 +718,10 @@ PrefabInstance:
       propertyPath: skill_grid
       value: 
       objectReference: {fileID: 4752528071554021117, guid: d87068d7aa3490144814707e933656ad, type: 3}
+    - target: {fileID: 8392217961930580495, guid: 0cceb5361f070914cb688b5543fb2d26, type: 3}
+      propertyPath: spawn_delay
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 9185458335076535690, guid: 0cceb5361f070914cb688b5543fb2d26, type: 3}
       propertyPath: skill_grid
       value: 

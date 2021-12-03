@@ -45,7 +45,7 @@ public class Boss_Bird : MonoBehaviour
 
     void Reset_Status()
     {
-        bird_health = 100.0f;
+        bird_health = 150.0f;
     }
 
     IEnumerator Is_Damage(float delay)

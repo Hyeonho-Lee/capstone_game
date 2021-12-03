@@ -107,6 +107,8 @@ public class PlayerData : MonoBehaviour
         // 다른 스크립트에서 Player_Data.player_Data.playerDataTable.bird_boss 를 사용하여
         // 데이터를 변경할 경우 해당 내용을 그대로 저장
 
+        playerDataTable.first_scene = false;
+
         playerDataTable.player_position_x = player.transform.position.x;
         playerDataTable.player_position_z = player.transform.position.z;
 

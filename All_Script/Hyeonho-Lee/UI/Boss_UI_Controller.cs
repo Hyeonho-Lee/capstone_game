@@ -46,7 +46,7 @@ public class Boss_UI_Controller : MonoBehaviour
             boss_name = "날카로운 번개를 두른 학";
             boss_text_name.text = boss_name;
             if (is_boss) {
-                boss_health_bar.value = boss_bird.bird_health / 100;
+                boss_health_bar.value = boss_bird.bird_health / 150;
             } else {
                 boss_health_bar.value = 1;
             }
@@ -56,7 +56,7 @@ public class Boss_UI_Controller : MonoBehaviour
             boss_name = "돌로 몸을 둘러싼 원숭이";
             boss_text_name.text = boss_name;
             if (is_boss) {
-                boss_health_bar.value = boss_monkey.monkey_health / 100;
+                boss_health_bar.value = boss_monkey.monkey_health / 200;
             } else {
                 boss_health_bar.value = 1;
             }

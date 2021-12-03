@@ -63,7 +63,7 @@ public class CameraMovement : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, dir, out hit, distance)) 
         {
-            if(hit.transform.tag == "Wall") 
+            if(hit.transform.tag == "Wall" || hit.transform.tag == "Pillar") 
             {
                 admin_wall = hit.collider.gameObject.GetComponent<Admin_Wall>();
                 StartCoroutine(admin_wall.Change_Material(3.0f));
