@@ -39,14 +39,14 @@ public class Inventory_Box : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             text_mesh.text = item_table.itemtable[0].desc;
         } else if (inventory_table.inventory[item_index].item_index == 2) {
             Image result = info_images.transform.GetChild(0).GetComponent<Image>();
-            result.sprite = info_image_2;
-            TextMeshProUGUI text_mesh = info_texts.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-            text_mesh.text = item_table.itemtable[2].desc;
-        } else if (inventory_table.inventory[item_index].item_index == 3) {
-            Image result = info_images.transform.GetChild(0).GetComponent<Image>();
             result.sprite = info_image_3;
             TextMeshProUGUI text_mesh = info_texts.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             text_mesh.text = item_table.itemtable[1].desc;
+        } else if (inventory_table.inventory[item_index].item_index == 3) {
+            Image result = info_images.transform.GetChild(0).GetComponent<Image>();
+            result.sprite = info_image_2;
+            TextMeshProUGUI text_mesh = info_texts.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            text_mesh.text = item_table.itemtable[2].desc;
         } else {
             Image result = info_images.transform.GetChild(0).GetComponent<Image>();
             result.sprite = info_image_0;

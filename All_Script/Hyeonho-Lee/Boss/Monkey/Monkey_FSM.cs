@@ -211,18 +211,17 @@ public class Monkey_FSM : MonoBehaviour
         Instantiate(base_attack_object, this.transform);
         real_time = 0;
         is_cool = false;
-        //GameObject grid = Instantiate(skill_grid, this.transform.position, this.transform.rotation);
-        //grid.transform.SetParent(skill_canvas.transform);
-        //Destroy(grid, 3f);
-        //StartCoroutine(base_effect(2.0f));
+        GameObject grid = Instantiate(skill_grid, this.transform.position, this.transform.rotation);
+        grid.transform.SetParent(skill_canvas.transform);
+        Destroy(grid, 3f);
+        StartCoroutine(base_effect(2.0f));
         StartCoroutine(boss_monkey.Animation_Delay(2.0f, "monkey_skill_0"));
-        //StartCoroutine(sound_delay(2.0f));
+        StartCoroutine(sound_delay(2.0f));
     }
 
     void Attack_Pattern_1()
     {
         pattern_1.Attack();
-        //StartCoroutine(boss_bird.Animation_Delay(1.0f, "bird_skill_1"));
     }
 
     void Attack_Pattern_2()
@@ -236,7 +235,6 @@ public class Monkey_FSM : MonoBehaviour
     void Attack_Pattern_3()
     {
         pattern_3.Attack();
-        //StartCoroutine(boss_bird.Animation_Delay(0.0f, "bird_skill_2"));
     }
 
     public IEnumerator attack_lock(float delay)
@@ -249,14 +247,14 @@ public class Monkey_FSM : MonoBehaviour
     IEnumerator base_effect(float delay)
     {
         yield return new WaitForSeconds(delay);
-        /*GameObject effects = Instantiate(effect.base_effect, this.transform.position + new Vector3(0f, 2f, 0f), this.transform.rotation * Quaternion.Euler(90f, 0f, 0f));
+        GameObject effects = Instantiate(effect.base_effect, this.transform.position + new Vector3(0f, 2f, 0f), this.transform.rotation * Quaternion.Euler(90f, 0f, 0f));
         effects.transform.parent = this.transform;
-        Destroy(effects, 1f);*/
+        Destroy(effects, 1f);
     }
 
     IEnumerator sound_delay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        //sound.Sound_Play(sound.skill_0_sound);
+        sound.Sound_Play(sound.skill_0_sound);
     }
 }

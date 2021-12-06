@@ -118,7 +118,7 @@ public class Enemy_0 : MonoBehaviour
     {
         is_die = true;
         value = 0;
-        Drop_Item(item_index, item_percent);
+        Drop_Item(item_index - 1, item_percent);
         if (die_effect != null) {
             GameObject die_effects = Instantiate(die_effect);
             die_effects.transform.position = this.transform.position;

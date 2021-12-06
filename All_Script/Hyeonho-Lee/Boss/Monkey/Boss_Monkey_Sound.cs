@@ -9,7 +9,9 @@ public class Boss_Monkey_Sound : MonoBehaviour
     public AudioClip skill_0_sound;
     public AudioClip skill_1_sound;
     public AudioClip skill_2_sound;
+    public AudioClip skill_3_sound;
     public AudioClip hit_sound;
+    public AudioClip wall_sound;
 
     void Start()
     {

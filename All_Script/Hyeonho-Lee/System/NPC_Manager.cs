@@ -68,7 +68,8 @@ public class NPC_Manager : MonoBehaviour
         text_mesh.text = "";
         foreach(char letter in sentence.ToCharArray()) {
             text_mesh.text += letter;
-            yield return new WaitForSeconds(0.05f);
+            //yield return new WaitForSeconds(0.01f);
+            yield return null;
         }
     }
 }

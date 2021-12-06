@@ -22,7 +22,7 @@ public class Load_Scene : MonoBehaviour
         manager = GameObject.Find("System").GetComponent<NPC_Manager>();
         player_data.PlayerDataLoad();
 
-        if (player_data.playerDataTable.town) {
+        if (player_data.playerDataTable.town && !player_data.playerDataTable.stage_2) {
             scene_name = "Play_Town";
             trigger_scene = "MainPlayRoom";
             StartCoroutine(Load_Scenes());
@@ -36,7 +36,7 @@ public class Load_Scene : MonoBehaviour
             world_admin.Check_Scene_Enter();
         }
         
-        if (player_data.playerDataTable.stage_2) {
+        if (player_data.playerDataTable.stage_2 && !player_data.playerDataTable.town) {
             scene_name = "Play_Stage_2";
             trigger_scene = "MainPlayRoom";
             StartCoroutine(Load_Scenes());

@@ -72,7 +72,7 @@ public class Enemy_1 : MonoBehaviour
     {
         search_distance = 23f;
         move_speed = 6.0f;
-        combat_distance = 6f;
+        combat_distance = 3f;
         cooltime = 8.0f;
         real_time = 2.0f;
     }
@@ -129,7 +129,6 @@ public class Enemy_1 : MonoBehaviour
     {
         Vector3 move_dir = (player.transform.position - transform.position).normalized;
         transform.position += move_dir * speed * Time.deltaTime;
-        Rotate(player);
     }
 
     void Rotate(GameObject player)

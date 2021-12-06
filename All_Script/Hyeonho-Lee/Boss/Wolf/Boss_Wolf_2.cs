@@ -79,7 +79,7 @@ public class Boss_Wolf_2 : MonoBehaviour
         if (attacks.name == "BossAttack_Sphere_4") {
             attack_grid = Instantiate(skill_grid_3, follow_attack.transform.position, Quaternion.identity);
             attack_grid.transform.SetParent(skill_canvas.transform);
-            Destroy(attack_grid, 5f);
+            Destroy(attack_grid, 3f);
         }
         //GameObject grid = Instantiate(skill_grid_1, follow_attack.transform.position, Quaternion.identity);
         //Destroy(grid, 3.0f);

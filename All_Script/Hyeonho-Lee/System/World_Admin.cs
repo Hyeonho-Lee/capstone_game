@@ -16,6 +16,9 @@ public class World_Admin : MonoBehaviour
 
     public string scene_name;
 
+    public bool is_end;
+    public bool is_ends;
+
     public NPC_Dialogue dialogue;
     private PlayerData player_data;
     private NPC_Manager manager;
@@ -56,10 +59,36 @@ public class World_Admin : MonoBehaviour
             }
         }
 
-        if (world[5].is_world_enter && player_data.playerDataTable.wolf_boss) {
+        if (player_data.playerDataTable.wolf_boss) {
             if (GameObject.Find("Wolf_Patern") != null) {
                 Destroy(GameObject.Find("Wolf_Patern"));
             }
+        }
+
+        if (player_data.playerDataTable.bird_boss) {
+            if (GameObject.Find("Bird_Patern") != null) {
+                Destroy(GameObject.Find("Bird_Patern"));
+            }
+        }
+
+        if (player_data.playerDataTable.monkey_boss) {
+            if (GameObject.Find("Monkey_Patern") != null) {
+                Destroy(GameObject.Find("Monkey_Patern"));
+            }
+        }
+
+        if (world[3].is_world_enter && player_data.playerDataTable.wolf_boss && player_data.playerDataTable.bird_boss && player_data.playerDataTable.monkey_boss && !is_end) {
+            is_end = true;
+
+            dialogue.image_index = 9;
+            dialogue.name = "까마귀";
+            dialogue.sentences = new string[4];
+            dialogue.sentences[0] = "드디어 모든 수호신들을 되돌렸구나.. 수고했어!!";
+            dialogue.sentences[1] = "으아니이이이이이이";
+            dialogue.sentences[2] = "마을에 갑자기 강력한 무언가가...";
+            dialogue.sentences[3] = "도와줘.....";
+
+            manager.Start_Dialogue(dialogue);
         }
 
         if (!player_data.playerDataTable.town_talk && world[1].is_world_enter) {
@@ -77,7 +106,7 @@ public class World_Admin : MonoBehaviour
             manager.Start_Dialogue(dialogue);
         }
 
-        if (!player_data.playerDataTable.wolf_boss_talk && world[5].is_world_enter) {
+        if (!player_data.playerDataTable.wolf_boss_talk && world[5].is_world_enter && !player_data.playerDataTable.wolf_boss) {
             player_data.playerDataTable.wolf_boss_talk = true;
 
             dialogue.image_index = 5;
@@ -89,7 +118,7 @@ public class World_Admin : MonoBehaviour
             manager.Start_Dialogue(dialogue);
         }
         
-        if (!player_data.playerDataTable.bird_boss_talk && world[6].is_world_enter) {
+        if (!player_data.playerDataTable.bird_boss_talk && world[6].is_world_enter && !player_data.playerDataTable.bird_boss) {
             player_data.playerDataTable.bird_boss_talk = true;
 
             dialogue.image_index = 6;
@@ -101,11 +130,11 @@ public class World_Admin : MonoBehaviour
             manager.Start_Dialogue(dialogue);
         }
 
-        if (!player_data.playerDataTable.monkey_boss_talk && world[7].is_world_enter) {
+        if (!player_data.playerDataTable.monkey_boss_talk && world[7].is_world_enter && !player_data.playerDataTable.monkey_boss) {
             player_data.playerDataTable.monkey_boss_talk = true;
 
             dialogue.image_index = 7;
-            dialogue.name = "돌로 몸을\n둘러싼 고릴라";
+            dialogue.name = "돌로 몸을\n둘러싼 원숭이";
             dialogue.sentences = new string[2];
             dialogue.sentences[0] = "음";
             dialogue.sentences[1] = "어";

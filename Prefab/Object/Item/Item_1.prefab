@@ -79,6 +79,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 2
+  image_0: {fileID: 21300000, guid: 96e6dfcf8951e2c499e371f886278f76, type: 3}
+  image_1: {fileID: 21300000, guid: 2ce0714c4b8859444b7c6977ba760f2c, type: 3}
+  image_2: {fileID: 21300000, guid: 927b350c3f1f25643a3577648a831c92, type: 3}
 --- !u!1001 &1799475889969719362
 PrefabInstance:
   m_ObjectHideFlags: 0

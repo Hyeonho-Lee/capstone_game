@@ -51,12 +51,14 @@ public class Player_Skill : MonoBehaviour
     private Animator skill_animator;
     private Rigidbody rigidbody;
     private TextMeshProUGUI textmesh;
+    private PlayerData player_data;
 
     void Start()
     {
         player = GameObject.Find("Player");
         banner = GameObject.Find("Banner");
         health_controller = GameObject.Find("System").GetComponent<Health_Controller>();
+        player_data = GameObject.Find("System").GetComponent<PlayerData>();
         player_movement = player.GetComponent<PlayerMovement>();
         animator = player.GetComponent<Animator>();
         skill_animator = banner.GetComponent<Animator>();
@@ -70,8 +72,8 @@ public class Player_Skill : MonoBehaviour
         skill_1_realtime = 30.0f;
         skill_2_time = 10.0f;
         skill_2_realtime = 10.0f;
-        skill_3_time = 15.0f;
-        skill_3_realtime = 15.0f;
+        skill_3_time = 1.0f;
+        skill_3_realtime = 1.0f;
     }
 
     void Update()
@@ -123,8 +125,7 @@ public class Player_Skill : MonoBehaviour
 
     public IEnumerator Skill_1()
     {
-        // heal_count > 0 && ready_heal
-        if (ready_heal) {
+        if (heal_count > 0 && ready_heal) {
             heal_count -= 1;
             heal_realtime = 0f;
             ready_heal = false;
@@ -152,9 +153,14 @@ public class Player_Skill : MonoBehaviour
         yield return null;
     }
 
+    public void change_momo()
+    {
+        textmesh.text = heal_count.ToString();
+    }
+
     public IEnumerator Skill_2()
     {
-        if (ready_skill_1) {
+        if (!player_movement.is_skill && ready_skill_1 && player_data.playerDataTable.is_stone_1) {
             Debug.Log("2번 스킬: 버프");
             skill_1_realtime = 0f;
             ready_skill_1 = false;
@@ -176,7 +182,7 @@ public class Player_Skill : MonoBehaviour
 
     public IEnumerator Skill_3()
     {
-        if (!player_movement.is_skill && ready_skill_2) 
+        if (!player_movement.is_skill && ready_skill_2 && player_data.playerDataTable.is_stone_3) 
         {
             Debug.Log("3번 스킬: 작은스킬");
             skill_animator.Play("skill_1");
@@ -188,7 +194,7 @@ public class Player_Skill : MonoBehaviour
             }
             if (banner.transform.GetChild(4).name == "Change_Text") {
                 TextMeshProUGUI text = banner.transform.GetChild(4).gameObject.GetComponent<TextMeshProUGUI>();
-                text.text = "돌진 발동!";
+                text.text = "스킬 발동!";
             }
             player_sound.SKill_3_Sound_Play();
             animator.Play("skill_1");
@@ -204,7 +210,7 @@ public class Player_Skill : MonoBehaviour
 
     public IEnumerator Skill_4()
     {
-        if (!player_movement.is_skill && ready_skill_3) {
+        if (!player_movement.is_skill && ready_skill_3 && player_data.playerDataTable.is_stone_2) {
             skill_3_realtime = 0f;
             ready_skill_3 = false;
             StartCoroutine(Move_Lock(0.8f));

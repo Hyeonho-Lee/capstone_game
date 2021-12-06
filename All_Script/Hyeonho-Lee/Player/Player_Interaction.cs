@@ -38,15 +38,15 @@ public class Player_Interaction : MonoBehaviour
 
     void Update()
     {
-        if (is_area) {
+        /*if (is_area) {
             collider.enabled = true;
         }else {
             collider.enabled = false;
-        }
+        }*/
 
         // F버튼을 누루면 주변에 아이템이 있냐에 따라 실행
         if (Input.GetKeyDown(KeyCode.F) && !movement.is_inventory && !movement.is_talk) {
-            StartCoroutine(Check_Area(1.0f));
+            //StartCoroutine(Check_Area(1.0f));
 
             if (item_distance != null && !movement.is_pick && eventList.Count > 0) {
                 

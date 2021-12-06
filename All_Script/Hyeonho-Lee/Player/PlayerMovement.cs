@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement P;
+
     public float h_axis, v_axis;
     public float move_speed;
     public float rotate_speed;
@@ -65,10 +67,6 @@ public class PlayerMovement : MonoBehaviour
     private Loading_Scene loading_scene;
     private NPC_Manager npc_manager;
 
-    private Renderer renderer;
-    private Renderer renderer_1;
-    private Renderer renderer_2;
-    private Renderer renderer_3;
     private CapsuleCollider collider;
     private Animator animator;
     private Animator hit_animator;
@@ -76,6 +74,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        P = this;
+
         rigidbody = GetComponent<Rigidbody>();
         collider = GetComponent<CapsuleCollider>();
         player_status = GameObject.Find("System").GetComponent<PlayerStatus>();
@@ -90,15 +90,7 @@ public class PlayerMovement : MonoBehaviour
         player_effect = GetComponent<PlayerEffect>();
         player_sound = GetComponent<PlayerSound>();
 
-        renderer = GameObject.Find("Player_Renderer").GetComponent<Renderer>();
-        renderer_1 = GameObject.Find("hat").GetComponent<Renderer>();
-        renderer_2 = GameObject.Find("weapon").GetComponent<Renderer>();
-        renderer_3 = GameObject.Find("weapon_slot").GetComponent<Renderer>();
         animator = GetComponent<Animator>();
-        object_mat = renderer.material;
-        hat_mat = renderer_1.material;
-        weapon_mat = renderer_2.material;
-        weaponslot_mat = renderer_3.material;
         player_status.Stat_Load();
         Reset_Status();
         health_controller.Check_Health(health);
@@ -233,18 +225,6 @@ public class PlayerMovement : MonoBehaviour
             defence_object.gameObject.SetActive(false);
         }
 
-        if (is_damage) {
-            renderer.material = damage_mat;
-            renderer_1.material = damage_mat;
-            renderer_2.material = damage_mat;
-            renderer_3.material = damage_mat;
-        } else {
-            renderer.material = object_mat;
-            renderer_1.material = hat_mat;
-            renderer_2.material = weapon_mat;
-            renderer_3.material = weaponslot_mat;
-        }
-
         if (is_stamina && stamina <= 100.0f) {
             if(is_defence) {
                 stamina += Time.deltaTime * 2.5f;
@@ -349,8 +329,9 @@ public class PlayerMovement : MonoBehaviour
         rigidbody.AddForce(dir * force, ForceMode.Force);
     }
 
-    void OnTriggerStay(Collider other)
+    /*void OnTriggerStay(Collider other)
     {
+        //Debug.Log(other);
         if(other.tag == "Attack")
         {
             if(!is_defence) {
@@ -359,6 +340,16 @@ public class PlayerMovement : MonoBehaviour
                 StartCoroutine(Is_Defence(1.0f));
             }
         }
+    }*/
+
+    public void Player_Hit()
+    {
+        StartCoroutine(Is_Damage(1.0f));
+    }
+
+    public void Player_Defence()
+    {
+        StartCoroutine(Is_Defence(1.0f));
     }
 
     IEnumerator Is_Damage(float delay)

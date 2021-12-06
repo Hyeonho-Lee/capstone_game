@@ -39,12 +39,14 @@ public class Boss_Wolf_1 : MonoBehaviour
 
     private void Update()
     {
-        if (dir != Vector3.zero)
+        if (dir != Vector3.zero && skill_grids != null)
         {
             Wolf_Heading_Vec();
-            Quaternion newRotation = Quaternion.LookRotation(dir * 10f * Time.deltaTime);
-            Quaternion newRotations = Quaternion.Euler(0f, newRotation.eulerAngles.y, 0f);
-            wolf.transform.rotation = Quaternion.Slerp(wolf.transform.rotation, newRotation, 10f * Time.deltaTime);
+            wolf.transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
+            skill_grids.transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
+            //Quaternion newRotation = Quaternion.LookRotation(dir * 10f * Time.deltaTime);
+            //Quaternion newRotations = Quaternion.Euler(0f, newRotation.eulerAngles.y, 0f);
+            //wolf.transform.rotation = Quaternion.Slerp(wolf.transform.rotation, newRotation, 10f * Time.deltaTime);
         }
 
         if (!is_cool) {
@@ -53,13 +55,6 @@ public class Boss_Wolf_1 : MonoBehaviour
             if (real_time >= cooltime) {
                 is_cool = true;
             }
-        }
-
-        if (skill_grids != null) {
-            Wolf_Heading_Vec();
-            Quaternion newRotation = Quaternion.LookRotation(dir * 10f * Time.deltaTime);
-            Quaternion newRotations = Quaternion.Euler(0f, newRotation.eulerAngles.y, 0f);
-            skill_grids.transform.rotation = Quaternion.Slerp(wolf.transform.rotation, newRotations, 10f * Time.deltaTime);
         }
     }
 

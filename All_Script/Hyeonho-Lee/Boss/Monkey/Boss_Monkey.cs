@@ -40,24 +40,25 @@ public class Boss_Monkey : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if (monkey_health <= 200.0f / 5.0f * 4.0f && !health_0) {
+        if (monkey_health <= 150.0f / 5.0f * 4.0f && !health_0) {
             health_0 = true;
             pattern_1.is_cool = true;
         }
 
-        if (monkey_health <= 200.0f / 5.0f * 3.0f && !health_1) {
+        if (monkey_health <= 150.0f / 5.0f * 3.0f && !health_1) {
             health_1 = true;
             pattern_1.is_cool = true;
         }
 
-        if (monkey_health <= 200.0f / 5.0f * 2.0f && !health_2) {
+        if (monkey_health <= 150.0f / 5.0f * 2.0f && !health_2) {
             health_2 = true;
             pattern_1.is_cool = true;
         }
 
-        if (monkey_health <= 200.0f / 5.0f * 1.0f && !health_3) {
+        if (monkey_health <= 150.0f / 5.0f * 1.0f && !health_3) {
             health_3 = true;
             pattern_3.is_cool = true;
+            pattern_3.is_puzzle = true;
         }
 
         Get_Value();
@@ -72,15 +73,15 @@ public class Boss_Monkey : MonoBehaviour
 
     void Reset_Status()
     {
-        monkey_health = 200.0f;
+        monkey_health = 150.0f;
     }
 
     IEnumerator Is_Damage(float delay)
     {
-        if (!is_damage) {
+        if (!is_damage && !pattern_3.is_puzzle) {
             is_damage = true;
-            monkey_health -= 10.0f;
-            //sound.Hit_Sound_Play();
+            monkey_health -= 1.0f;
+            sound.Sound_Play(sound.hit_sound);
             yield return new WaitForSeconds(delay);
             is_damage = false;
         }

@@ -207,7 +207,7 @@ public class Bird_FSM : MonoBehaviour
         } else if (is_attack_2 && !is_attack_lock) {
             Attack_Pattern_2();
             is_attack_2 = false;
-            StartCoroutine(attack_lock(5.5f));
+            StartCoroutine(attack_lock(8.5f));
         } else if (is_attack_3 && !is_attack_lock) {
             Attack_Pattern_3();
             is_attack_3 = false;

@@ -49,7 +49,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5310248706026389884}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -112,6 +112,6 @@ MonoBehaviour:
   is_sphere: 1
   is_capsule: 0
   is_mesh: 0
-  spawn_time: 30
+  spawn_time: 40
   destroy_time: 600
   attack_area: {fileID: 2100000, guid: a933f2bdd68295449b6026941c6fd02a, type: 2}

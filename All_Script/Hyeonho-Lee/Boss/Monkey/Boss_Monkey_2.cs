@@ -13,6 +13,9 @@ public class Boss_Monkey_2 : MonoBehaviour
     public GameObject attack_1;
     public GameObject attack_2;
     public GameObject attack_3;
+    public GameObject skill_grid_1;
+    public GameObject skill_grid_2;
+    public GameObject skill_grid_3;
 
     private GameObject monkey;
 
@@ -46,6 +49,7 @@ public class Boss_Monkey_2 : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         Instantiate(attack_object, this.transform);
+        StartCoroutine(sound_delay(1.0f));
     }
 
     [ContextMenu("Attack")]
@@ -53,10 +57,38 @@ public class Boss_Monkey_2 : MonoBehaviour
     {
         if (is_cool && monkey_fsm.is_attack_2) {
             StartCoroutine(Attack_Spawn(attack_1, 0f));
+            StartCoroutine(Grid_Spawn(skill_grid_1, 0f));
+            StartCoroutine(Effect_Spawn(effect.skill_2_effect, 0.5f));
             StartCoroutine(Attack_Spawn(attack_2, interval_time));
+            StartCoroutine(Grid_Spawn(skill_grid_2, interval_time));
+            StartCoroutine(Effect_Spawn(effect.skill_2_1_effect, interval_time));
             StartCoroutine(Attack_Spawn(attack_3, interval_time * 2f));
+            StartCoroutine(Grid_Spawn(skill_grid_3, interval_time * 2f));
+            StartCoroutine(Effect_Spawn(effect.skill_2_2_effect, interval_time * 2f));
             real_time = 0;
             is_cool = false;
         }
+    }
+
+    IEnumerator sound_delay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        sound.Sound_Play(sound.skill_2_sound);
+    }
+
+    IEnumerator Effect_Spawn(GameObject attack_object, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        GameObject effects = Instantiate(attack_object, this.transform);
+        effects.transform.position += new Vector3(0.0f, 9.5f, 0.0f);
+        Destroy(effects, 3.0f);
+    }
+
+    IEnumerator Grid_Spawn(GameObject attack_object, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        GameObject grid = Instantiate(attack_object, this.transform.position, this.transform.rotation);
+        grid.transform.SetParent(skill_canvas.transform);
+        Destroy(grid, 3f);
     }
 }

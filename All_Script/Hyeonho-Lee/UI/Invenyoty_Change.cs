@@ -29,9 +29,9 @@ public class Invenyoty_Change : MonoBehaviour
             } else if (inventory_table.inventory[i].item_index == 1) {
                 image.sprite = item_image_1;
             } else if (inventory_table.inventory[i].item_index == 2) {
-                image.sprite = item_image_2;
-            } else if (inventory_table.inventory[i].item_index == 3) {
                 image.sprite = item_image_3;
+            } else if (inventory_table.inventory[i].item_index == 3) {
+                image.sprite = item_image_2;
             }
 
             if (inventory_table.inventory[i].item_count == 0) {

@@ -56,7 +56,7 @@ public class Boss_UI_Controller : MonoBehaviour
             boss_name = "µ¹·Î ¸öÀ» µÑ·¯½Ñ ¿ø¼þÀÌ";
             boss_text_name.text = boss_name;
             if (is_boss) {
-                boss_health_bar.value = boss_monkey.monkey_health / 200;
+                boss_health_bar.value = boss_monkey.monkey_health / 150;
             } else {
                 boss_health_bar.value = 1;
             }
