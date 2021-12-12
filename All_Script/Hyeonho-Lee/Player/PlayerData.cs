@@ -85,8 +85,8 @@ public class PlayerData : MonoBehaviour
         playerDataTable.monkey_boss_talk = false;
         playerDataTable.last_boss_talk = false;
         playerDataTable.first_scene = false;
-        playerDataTable.player_position_x = player.transform.position.x;
-        playerDataTable.player_position_z = player.transform.position.z;
+        playerDataTable.player_position_x = 0.0f;
+        playerDataTable.player_position_z = 0.0f;
 
         JObject player_data_json = JObject.FromObject(playerDataTable);
 
@@ -111,6 +111,42 @@ public class PlayerData : MonoBehaviour
 
         playerDataTable.player_position_x = player.transform.position.x;
         playerDataTable.player_position_z = player.transform.position.z;
+
+        JObject data = JObject.FromObject(playerDataTable);
+
+        string text = Application.dataPath + "/Resources/" + playerDataFileName;
+        File.WriteAllText(text, data.ToString());
+
+        //Debug.Log(data.ToString());
+    }
+
+    public void PlayerDataReset()
+    {
+        if (!FileCheck(playerDataFileName)) {
+            CreatPlayerData();
+        }
+
+        // 다른 스크립트에서 Player_Data.player_Data.playerDataTable.bird_boss 를 사용하여
+        // 데이터를 변경할 경우 해당 내용을 그대로 저장
+
+        playerDataTable.bird_boss = false;
+        playerDataTable.wolf_boss = false;
+        playerDataTable.monkey_boss = false;
+        playerDataTable.last_boss = false;
+        playerDataTable.town = false;
+        playerDataTable.stage_2 = false;
+        playerDataTable.is_stone_1 = false;
+        playerDataTable.is_stone_2 = false;
+        playerDataTable.is_stone_3 = false;
+        playerDataTable.tutorial_talk = false;
+        playerDataTable.town_talk = false;
+        playerDataTable.bird_boss_talk = false;
+        playerDataTable.wolf_boss_talk = false;
+        playerDataTable.monkey_boss_talk = false;
+        playerDataTable.last_boss_talk = false;
+        playerDataTable.first_scene = false;
+        playerDataTable.player_position_x = 0.0f;
+        playerDataTable.player_position_z = 0.0f;
 
         JObject data = JObject.FromObject(playerDataTable);
 

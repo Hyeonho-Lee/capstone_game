@@ -8,6 +8,7 @@ public class Boss_Monkey_3 : MonoBehaviour
 
     public bool is_puzzle;
     public bool is_puzzle_clear;
+    private bool is_ani;
 
     private bool is_sound;
 
@@ -44,6 +45,11 @@ public class Boss_Monkey_3 : MonoBehaviour
             StartCoroutine(Is_Sound(2.0f));
         }
 
+        if (is_ani) {
+            StartCoroutine(boss_monkey.Animation_Delay(0.0f, "monkey_charge"));
+            is_ani = false;
+        }
+
         if (is_puzzle_clear && is_puzzle) {
             is_puzzle = false;
             is_puzzle_clear = false;
@@ -67,6 +73,8 @@ public class Boss_Monkey_3 : MonoBehaviour
     public void Attack()
     {
         if (is_cool && monkey_fsm.is_attack_3) {
+            is_ani = true;
+
             player = GameObject.Find("Player").gameObject;
             StartCoroutine(Attack_Spawn(attack_prefab, 0f));
 

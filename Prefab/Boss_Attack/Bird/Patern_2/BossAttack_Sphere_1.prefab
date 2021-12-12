@@ -113,5 +113,5 @@ MonoBehaviour:
   is_capsule: 0
   is_mesh: 0
   spawn_time: 3
-  destroy_time: 5
+  destroy_time: 1
   attack_area: {fileID: 2100000, guid: a933f2bdd68295449b6026941c6fd02a, type: 2}

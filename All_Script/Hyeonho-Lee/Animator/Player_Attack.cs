@@ -118,15 +118,17 @@ public class Player_Attack : MonoBehaviour
             distance = 5.5f;
         }
 
-        Debug.DrawRay(transform.position + new Vector3(0f, 2f, 0f), transform.forward * distance, Color.green, 0.5f);
-        Debug.DrawRay(transform.position + new Vector3(2f, 2f, 0f), transform.forward * distance, Color.green, 0.5f);
-        Debug.DrawRay(transform.position + new Vector3(-2f, 2f, 0f), transform.forward * distance, Color.green, 0.5f);
+        Debug.DrawRay(transform.position + new Vector3(0f, 2f, 0f), transform.forward * distance, Color.red, 0.5f);
+        Debug.DrawRay(transform.position + new Vector3(1f, 2f, 0f), transform.forward * distance, Color.red, 0.5f);
+        Debug.DrawRay(transform.position + new Vector3(-1f, 2f, 0f), transform.forward * distance, Color.red, 0.5f);
+        Debug.DrawRay(transform.position + new Vector3(0f, 2f, 1f), transform.forward * distance, Color.red, 0.5f);
+        Debug.DrawRay(transform.position + new Vector3(0f, 2f, -1f), transform.forward * distance, Color.red, 0.5f);
 
         if (Physics.Raycast(transform.position + new Vector3(0f, 2f, 0f), transform.forward * distance, out hit, distance) ||
-            Physics.Raycast(transform.position + new Vector3(2f, 2f, 0f), transform.forward * distance, out hit, distance) ||
-            Physics.Raycast(transform.position + new Vector3(-2f, 2f, 0f), transform.forward * distance, out hit, distance) ||
             Physics.Raycast(transform.position + new Vector3(1f, 2f, 0f), transform.forward * distance, out hit, distance) ||
-            Physics.Raycast(transform.position + new Vector3(-1f, 2f, 0f), transform.forward * distance, out hit, distance)) {
+            Physics.Raycast(transform.position + new Vector3(-1f, 2f, 0f), transform.forward * distance, out hit, distance) ||
+            Physics.Raycast(transform.position + new Vector3(0f, 2f, 1f), transform.forward * distance, out hit, distance) ||
+            Physics.Raycast(transform.position + new Vector3(0f, 2f, -1f), transform.forward * distance, out hit, distance)) {
             if (hit.transform.tag == "Boss_Patern_Wolf" || hit.transform.tag == "Boss_Patern_Bird" || hit.transform.tag == "Boss_Patern_Monkey" || hit.transform.tag == "Enemy") {
                 StartCoroutine(camera_shake.Shake(0.2f));
                 if (attack_count == 1) {

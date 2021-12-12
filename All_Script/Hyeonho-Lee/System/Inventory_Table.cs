@@ -95,4 +95,20 @@ public class Inventory_Table : MonoBehaviour
         string text = Application.dataPath + "/Resources/InventoryJson.json";
         File.WriteAllText(text, inventory_array.ToString());
     }
+
+    public void Inventory_Resets()
+    {
+
+        JArray inventory_array = new JArray();
+        for (int i = 0; i < inventory.Length; i++) {
+            inventory_array.Add(new JObject(
+                new JProperty("inv_index", inventory[i].inv_index),
+                new JProperty("item_index", 0),
+                new JProperty("item_count", 0)
+            ));
+        }
+
+        string text = Application.dataPath + "/Resources/InventoryJson.json";
+        File.WriteAllText(text, inventory_array.ToString());
+    }
 }

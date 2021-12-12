@@ -93,7 +93,15 @@ public class Enemy_0 : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player_Attack" && !is_die) {
-            StartCoroutine(Is_Damage(0.3f));
+            StartCoroutine(Is_Damage(0.3f, 1.0f));
+        }
+
+        if (other.tag == "Player_Attack_3" && !is_die) {
+            StartCoroutine(Is_Damage(0.3f, 2.0f));
+        }
+
+        if (other.tag == "Player_Attack_4" && !is_die) {
+            StartCoroutine(Is_Damage(0.3f, 2.5f));
         }
     }
 
@@ -103,11 +111,11 @@ public class Enemy_0 : MonoBehaviour
         enemy_health = start_health;
     }
 
-    IEnumerator Is_Damage(float delay)
+    IEnumerator Is_Damage(float delay, float damage)
     {
         if (!is_damage) {
             is_damage = true;
-            enemy_health -= 1.0f;
+            enemy_health -= damage;
             audio.PlayOneShot(enemy_hit_sound);
             yield return new WaitForSeconds(delay);
             is_damage = false;

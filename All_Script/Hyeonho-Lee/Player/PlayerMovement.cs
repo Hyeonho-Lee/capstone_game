@@ -226,9 +226,11 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (is_stamina && stamina <= 100.0f) {
-            if(is_defence) {
+            if (is_defence) {
                 stamina += Time.deltaTime * 2.5f;
-            }else {
+            } else if (player_skill.is_buff) {
+                stamina += Time.deltaTime * 7.5f;
+            } else {
                 stamina += Time.deltaTime * 5f;
             }
         }
@@ -245,6 +247,12 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(Is_Die());
         }else if (health <= 0 && is_test){
             health += 10;
+        }
+
+        if (player_skill.is_buff && !is_defence) {
+            move_speed = 20.0f;
+        }else if (!player_skill.is_buff && !is_defence) {
+            move_speed = speed_backup;
         }
     }
 

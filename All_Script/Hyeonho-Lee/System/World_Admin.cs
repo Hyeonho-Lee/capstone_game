@@ -91,8 +91,13 @@ public class World_Admin : MonoBehaviour
             manager.Start_Dialogue(dialogue);
         }
 
+        if (player_data.playerDataTable.wolf_boss && player_data.playerDataTable.bird_boss && player_data.playerDataTable.monkey_boss && !is_ends) {
+            is_ends = true;
+        }
+
         if (!player_data.playerDataTable.town_talk && world[1].is_world_enter) {
             player_data.playerDataTable.town_talk = true;
+            player_data.PlayerDataSave();
 
             dialogue.image_index = 9;
             dialogue.name = "까마귀";
@@ -136,8 +141,8 @@ public class World_Admin : MonoBehaviour
             dialogue.image_index = 7;
             dialogue.name = "돌로 몸을\n둘러싼 원숭이";
             dialogue.sentences = new string[2];
-            dialogue.sentences[0] = "음";
-            dialogue.sentences[1] = "어";
+            dialogue.sentences[0] = "얼간이 같으니... 똑똑히 깨닫거라...";
+            dialogue.sentences[1] = "나의 진정한 능력은.. 그야말로! 파멸을 불러올 능력이라는 것을!";
 
             manager.Start_Dialogue(dialogue);
         }
